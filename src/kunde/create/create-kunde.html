@@ -1,0 +1,251 @@
+<!--
+   Copyright (C) 2015 - 2017 Juergen Zimmermann, Hochschule Karlsruhe
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<div class="card">
+    <div class="card-header bg-primary">
+        <span class="ml-1 font-weight-bold">Neuer Kunde</span>
+    </div>
+
+    <div class="card-body">
+        <!-- Template-Syntax:
+                [formGroup]="form"  fuer Input = Property Binding
+                                    d.h. formGroup fuer Attr. form
+                (submit)="save()"  fuer Output = Event Binding
+                                   d.h. Ereignis submit an save() anbinden
+                                   oder on-submit="save"
+                Definition von Attributnamen gemaess HTML: Attribute names
+                must consist of one or more characters other than the
+                space characters, U+0000 NULL, """, "'", ">", "/", "=",
+                the control characters, and any characters that are not
+                defined by Unicode.
+                https://github.com/angular/angular/issues/6786
+        -->
+        <!-- dynamisches Formular durch formGroup -->
+        <form [formGroup]="form" role="form">
+            <div class="form-group row has-warning" *ngIf="showWarning">
+                <div class="form-control-feedback">
+                    <i class="fa fa-2x fa-warning"></i>
+                    <strong class="text-help ml-1">
+                        Wenn Sie die Seite jetzt verlassen, verlieren Sie Ihre eingegebenen Daten.
+                    </strong>
+                </div>
+            </div>
+
+            <div class="form-group row" [class.has-danger]="!nachname.valid && nachname.touched">
+                <label for="nachnameInput" class="col col-2 form-control-label">
+                    Nachname *
+                </label>
+                <div class="col col-10">
+                    <input id="nachnameInput" placeholder="Nachname" class="form-control" autofocus formControlName="nachname">
+                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!nachname.valid && nachname.touched">
+                        Ein Kundenachname muss mit einem Buchstaben oder einer Ziffer beginnen und mindestens 2 Zeichen lang sein.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row" [class.has-danger]="!adresse.valid && adresse.touched">
+                <label for="adresseInput" class="col col-2 form control-label">
+                    Adresse *
+                </label>
+                <div class="col col-10">
+                    <input id="plzInput" placeholder="PLZ" class="form-control" autofocus formControlName="plz">
+                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!plz.valid && plz.touched">
+                        Eine PLZ muss mit einem Buchstaben oder einer Ziffer beginnen und mindestens 5 Zeichen lang sein.
+                    </div>
+                    <input id="ortInput" placeholder="Ort" class="form-control" autofocus formControlName="ort">
+                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!ort.valid && ort.touched">
+                        Ein Ort muss mit einem Buchstaben oder einer Ziffer beginnen und mindestens 2 Zeichen lang sein.
+                    </div>
+                </div>
+            </div>
+<!--        muss noch geändert werden
+            <div class="form-group row">
+                <label class="col col-2 form-control-label">Kategorie</label>
+                <div class="col col-10">
+                    <select class="form-control" formControlName="kategorie">
+                        <option value="">Kategorie ausw&auml;hlen</option>
+                        <optgroup label="Hoch">
+                            <option value="3">13</option>
+                            <option value="12">12</option>
+                            <option value="11>11</option>
+                            <option value="10">10</option>
+                            <option value="9">9</option>
+                            <option value="8">8</option>
+                            <option value="7">7</option>
+                            <option value="6">6</option>
+                        </optgroup>
+                        <optgroup label="Mittel">
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                        </optgroup>
+                        <optgroup label="Niedrig">
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </optgroup>
+                </select>
+                </div>
+            </div>
+        -->
+            <div class="form-group row">
+                <label class="col col-2 form-control-label">Familienstand *</label>
+                <div class="col col-10">
+                    <div class="radio">
+                        <label class="radio-inline">
+                            <input type="radio" formControlName="geschlecht"
+                                   name="geschlecht" value="WEIBLICH"> Weiblich
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="radio-inline">
+                            <input type="radio" formControlName="geschlecht"
+                                   name="geschlecht" value="MÄNNLICH"> Männlich
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row" [class.has-danger]="!familienstand.valid && familienstand.touched">
+                <label class="col col-2 form-control-label">Familienstand *</label>
+                <div class="col col-10">
+                    <select class="form-control form-control-danger" formControlName="familienstand" required>
+                        <option value="">Einen Familienstand ausw&auml;hlen</option>
+                        <option value="LEDIG">Familienstand Ledig</option>
+                        <option value="VERHEIRATET">Familienstand Verheiratet</option>
+                        <option value="GESCHIEDEN">Familienstand Geschieden</option>
+                        <option value="VERWITWET">Familienstand Verwitwet</option>
+                    </select>
+                    <!-- http://www.quackit.com/bootstrap/bootstrap_4/tutorial/bootstrap_dropdowns.cfm -->
+                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!familienstand.valid && familienstand.touched">
+                        Ein Familienstand ist erforderlich.
+                    </div>
+                </div>
+            </div>
+<!-- Umsatz ist bei neuem Kunden noch nicht vorhanden
+            <div class="form-group row" [class.has-danger]="!preis.valid && preis.touched">
+                <label for="preisInput" class="col col-2 form-control-label">
+                    Preis *
+                </label>
+                <div class="col col-10">
+                    <div class="input-group">
+                        <input id="preisInput" placeholder="Preis, z.B. 123.45" required class="form-control form-control-danger" type="number" formControlName="preis" />
+                        <span class="input-group-addon">&#x20ac;</span>
+                    </div>
+                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!preis.valid && preis.touched">
+                        Ein Preis muss eingegeben werden, z.B. 123.45
+                    </div>
+                </div>
+            </div>
+        -->
+        <!--
+            <div class="form-group row" [class.has-danger]="!rabatt.valid && rabatt.touched">
+                <label for="rabattInput" class="col col-2 form-control-label">
+                    Rabatt *
+                </label>
+                <div class="col col-10">
+                    <div class="input-group">
+                        <input id="rabattInput" placeholder="Rabatt in Prozent, z.B. 5.67" required class="form-control form-control-danger" type="number" formControlName="rabatt" />
+                        <span class="input-group-addon">%</span>
+                    </div>
+                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!rabatt.valid && rabatt.touched">
+                        Ein Rabatt muss in Prozent eingegeben werden, z.B. 5.67
+                    </div>
+                </div>
+            </div>
+        -->
+            <div class="form-group row" [class.has-danger]="!geburtsdatum.valid && geburtsdatum.touched">
+                <label for="geburtsdatumInput" class="col col-2 form-control-label">
+                    Geburtsdatum
+                </label>
+                <div class="col col-10">
+                    <input id="geburtsdatumInput" class="form-control" type="date" formControlName="geburtsdatum" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="newsletterInput" class="col col-2 form-control-label">
+                    Newsletter?
+                </label>
+                <div class="col col-10">
+                    <div class="checkbox">
+                        <label>
+                            <input id="newsletterInput" type="checkbox"
+                                   formControlName="newsletter"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="interessenInput" class="col col-2 form-control-label">
+                    Interessen
+                </label>
+                <div class="col col-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                   formControlName="sport"/>
+                            Sport
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                   formControlName="lesen"/>
+                            Lesen
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                   formControlName="reisen"/>
+                            Reisen
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row" [class.has-danger]="!email.valid && email.touched">
+                <label for="emailInput" class="col col-2 form-control-label">
+                    Email *
+                </label>
+                <div class="col col-10">
+                    <input id="emailInput" placeholder="Email" class="form-control form-control-danger" required minlength="2" formControlName="email">
+                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!email.valid && email.touched">
+                        Eine g&uuml;ltige Email-Adresse ist notwendig.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col offset-2">
+                    <!-- Template-Syntax:
+                            (click)="onSave()" fuer Output = Event Binding
+                                               d.h. Ereignis click an onSave() anbinden
+                                               oder on-click="onSave"
+                            [disabled]="..." fuer Input = Property Binding
+                    -->
+                    <button class="btn btn-primary" (click)="onSave()" [disabled]="!form.valid">
+                        <i class="fa fa-check"></i>
+                        <span class="ml-1">Jetzt anlegen</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <small>* sind Pflichtfelder</small>
+    </div>
+</div>
