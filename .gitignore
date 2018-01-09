@@ -1,0 +1,41 @@
+# Abhaengige Dateien durch npm
+node_modules
+
+# Uebersetzte oder generierte Dateien
+dist
+doc
+reports
+tests_output
+
+# IDEs und Editoren
+.idea
+.sonarlint
+.vscode
+.vs
+
+# System Dateien
+.DS_Store
+Thumbs.db
+/scripts
+/registry
+/kunde
+/kafka-mailer
+/config
+/registry
+.eslintignore
+.eslintrc
+.gitattributes
+.jshintignore
+.jshintrc
+.npmignore
+jsconfig.json
+nightwatch.conf.js
+nightwatch.js
+package.json
+packagge-lock.json
+tasks.json
+tsconfig.json
+tslint.json
+typedoc.json
+webpack.config.js
+package-lock.json
