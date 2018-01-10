@@ -1,4 +1,4 @@
-export class Umsatz {
+class Umsatz {
     waehrung: string
     betrag: number
     constructor(waehrung, betrag) {
