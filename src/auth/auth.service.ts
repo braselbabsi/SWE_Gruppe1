@@ -19,8 +19,10 @@ import {EventEmitter, Inject, Injectable} from '@angular/core'
 
 import {log} from '../shared'
 
+import BasicAuthService from './basic-auth.service'
 import CookieService from './cookie.service'
-import JwtService from './jwt.service'
+
+// import JwtService from './jwt.service'
 
 export const ROLLE_ADMIN = 'admin'
 
@@ -32,7 +34,8 @@ export class AuthService {
         new EventEmitter<Array<string>>()
 
     constructor(
-        @Inject(JwtService) private readonly jwtService: JwtService,
+        //  @Inject(JwtService) private readonly jwtService: JwtService,
+        @Inject(BasicAuthService) private readonly basicAuthService: BasicAuthService,
         @Inject(CookieService) private readonly cookieService: CookieService) {
         console.log('AuthService.constructor()')
     }
@@ -44,11 +47,11 @@ export class AuthService {
      */
     @log
     async login(username: string, password: string) {
-        let rollen: Array<string>|undefined
+      //  let rollen: Array<string>|undefined
         try {
-            // this.basicAuthService.login(username, password)
-            rollen = await this.jwtService.login(username, password)
-        // Optional catch binding parameters
+            this.basicAuthService.login(username, password)
+            // rollen = await this.jwtService.login(username, password)
+            // Optional catch binding parameters
         } catch {
             this.isLoggedInEmitter.emit(false)
             this.rollenEmitter.emit([])
@@ -56,7 +59,7 @@ export class AuthService {
         }
 
         this.isLoggedInEmitter.emit(true)
-        this.rollenEmitter.emit(rollen)
+       // this.rollenEmitter.emit(rollen)
     }
 
     /**
