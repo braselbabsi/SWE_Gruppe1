@@ -1,5 +1,4 @@
-
-export class Adresse {
+class Adresse {
     ort: string
     plz: number
     constructor(ort, plz) {
