@@ -16,12 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import Adresse
-import Umsatz
+import 'andresse.ts'
+import 'umsatz.ts'
+
 import * as _ from 'lodash'
 import * as moment from 'moment'
 import 'moment/locale/de'
-import _date = moment.unitOfTime._date
+
+// import _date = moment.unitOfTime._date
 
 moment.locale('de')
 
@@ -107,7 +109,6 @@ export class Kunde {
         public familienstand: FamilienstandType|undefined,
         public geschlecht: GeschlechtType|undefined,
         public geburtsdatum: moment.Moment|undefined,
-
         public newsletter: boolean|undefined,
         public user: string|undefined,
         public adresse: Adresse|undefined,
@@ -121,7 +122,7 @@ export class Kunde {
         this.familienstand = familienstand || undefined
         this.geschlecht = geschlecht || undefined
         this.geburtsdatum =
-            geburtsdatum !== undefined ? geburtsdatum : moment(new Date().toISOString())
+        geburtsdatum !== undefined ? geburtsdatum : moment(new Date().toISOString())
         this.newsletter = newsletter || undefined
         this.user = user || undefined
         this.adresse = adresse || undefined
@@ -155,9 +156,9 @@ export class Kunde {
         }
         const kunde = new Kunde(
             kundeServer._id, kundeServer.nachname, kundeServer.kategorie, kundeServer.familienstand,
-            kundeServer.geschlecht, datum,
-            kundeServer.newsletter, kundeServer.interessen, kundeServer.email, kundeServer.geburtsdatum,
-            kundeServer.adresse, kundeServer.homepage, kundeServer.umsatz)
+            kundeServer.geschlecht, datum, kundeServer.newsletter, kundeServer.user,
+            kundeServer.adresse, kundeServer.homepage, kundeServer.umsatz,
+            kundeServer.interessen, kundeServer.email)
         console.log('Kunde.fromServer(): kunde=', kunde)
         return kunde
     }
@@ -183,8 +184,8 @@ export class Kunde {
         const kunde = new Kunde(
             kundeForm._id, kundeForm.nachname, kundeForm.kategorie, kundeForm.familienstand,
             kundeForm.geschlecht, datumMoment,
-            kundeForm.newsletter, interessen, kundeForm.email, kundeForm.geburtsdatum, kundeForm.adresse,
-            kundeForm.homepage, kundeForm.umsatz)
+            kundeForm.newsletter, kundeForm.user, kundeForm.adresse,
+            kundeForm.homepage, kundeForm.umsatz, interessen, kundeForm.email)
         console.log('Kunde.fromForm(): kunde=', kunde)
         return kunde
     }
@@ -215,11 +216,11 @@ export class Kunde {
      * @return true, falls der Teilstring im Buchtitel enthalten ist. Sonst
      *         false.
      */
-    containsName(name: string) {
+    containsName(nachname: string) {
         let result = false
-        if (this.name !== undefined) {
-            const tmp = this.name as string
-            result = tmp.toLowerCase().includes(name.toLowerCase())
+        if (this.nachname !== undefined) {
+            const tmp = this.nachname as string
+            result = tmp.toLowerCase().includes(nachname.toLowerCase())
         }
         return result
     }
@@ -322,10 +323,10 @@ export class Kunde {
      * Konvertierung des Buchobjektes in ein JSON-Objekt f&uuml;r den RESTful
      * Web Service.
      // tslint:disable-next-line:max-line-length
-     * @return {{_id: (string|any); name: (string|any); rating: (number|any); familienstand: (FamilienstandType|any); geschlecht: (GeschlechtType|any); datum: string; kategorie: (number|any); newsletter: (boolean|any); schlagwoerter: (Array<string>|any); email: (string|any); username: (string|any); adresse: (Adresse|any); homepage: (string|any); umsatz: (Umsatz|any); interessen: (InteressenType|any)}} JSON-Objekt f&uuml;r den RESTful Web Service
+     * @return {{_id: (string|any); nachname: (string|any); kategorie: (number|any); familienstand: (FamilienstandType|any); geschlecht: (GeschlechtType|any); datum: string; newsletter: (boolean|any); interessen: (Array<string>|any); email: (string|any); user: (string|any); adresse: (Adresse|any); homepage: (string|any); umsatz: (Umsatz|any)}} JSON-Objekt f&uuml;r den RESTful Web Service
      */
     toJSON(): KundeServer {
-        const datum = this.geburtsdatum === undefined ?
+        const geburtsdatum = this.geburtsdatum === undefined ?
             undefined :
             this.geburtsdatum.format('YYYY-MM-DD')
         return {
@@ -334,7 +335,7 @@ export class Kunde {
             kategorie: this.kategorie,
             familienstand: this.familienstand,
             geschlecht: this.geschlecht,
-            datum,
+            geburtsdatum,
             newsletter: this.newsletter,
             interessen: this.interessen,
             email: this.email,
