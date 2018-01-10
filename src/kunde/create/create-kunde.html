@@ -71,16 +71,15 @@
                     </div>
                 </div>
             </div>
-<!--        muss noch geändert werden
             <div class="form-group row">
                 <label class="col col-2 form-control-label">Kategorie</label>
                 <div class="col col-10">
                     <select class="form-control" formControlName="kategorie">
                         <option value="">Kategorie ausw&auml;hlen</option>
                         <optgroup label="Hoch">
-                            <option value="3">13</option>
+                            <option value="13">13</option>
                             <option value="12">12</option>
-                            <option value="11>11</option>
+                            <option value="11">11</option>
                             <option value="10">10</option>
                             <option value="9">9</option>
                             <option value="8">8</option>
@@ -99,7 +98,6 @@
                 </select>
                 </div>
             </div>
-        -->
             <div class="form-group row">
                 <label class="col col-2 form-control-label">Familienstand *</label>
                 <div class="col col-10">
@@ -134,7 +132,7 @@
                     </div>
                 </div>
             </div>
-<!-- Umsatz ist bei neuem Kunden noch nicht vorhanden
+            <!-- Umsatz ist bei neuem Kunden noch nicht vorhanden 
             <div class="form-group row" [class.has-danger]="!preis.valid && preis.touched">
                 <label for="preisInput" class="col col-2 form-control-label">
                     Preis *
@@ -149,8 +147,6 @@
                     </div>
                 </div>
             </div>
-        -->
-        <!--
             <div class="form-group row" [class.has-danger]="!rabatt.valid && rabatt.touched">
                 <label for="rabattInput" class="col col-2 form-control-label">
                     Rabatt *
@@ -166,12 +162,22 @@
                 </div>
             </div>
         -->
+
             <div class="form-group row" [class.has-danger]="!geburtsdatum.valid && geburtsdatum.touched">
                 <label for="geburtsdatumInput" class="col col-2 form-control-label">
                     Geburtsdatum
                 </label>
                 <div class="col col-10">
                     <input id="geburtsdatumInput" class="form-control" type="date" formControlName="geburtsdatum" />
+                </div>
+            </div>
+
+            <div class="form-group row" [class.has-danger]="!homepage.valid && homepage.touched">
+                <label for="homepageInput" class="col col-2 form-control-label">
+                    Homepage 
+                </label>
+                <div class="col col-10">
+                    <input id="homepageInput" placeholder="Homepage" class="form-control" autofocus formControlName="homepage">
                 </div>
             </div>
 

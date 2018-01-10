@@ -26,17 +26,17 @@
             <td><label>Adresse</label></td>
             <td>{{ kunde.adresse }}</td>
         </tr>
-        <!--
+        
         <tr>
             <td><label>Kategorie</label></td>
             <td>
                 <span *ngFor="let r of kunde.kategorieArray">
-                    <i class="fa fa-star" style="color: yellow;"
+                    <i class="fa fa-star" style="color: rgb(72, 255, 0);"
                         *ngIf="r === true"></i>
                 </span>
             </td>
         </tr>
-    -->
+    
         <tr>
             <td><label>Geschlecht</label></td>
             <td>
@@ -84,6 +84,14 @@
         <tr>
             <td><label>Email</label></td>
             <td>{{ kunde.email }}</td>
+        </tr>
+        <tr>
+            <td><label>Homepage</label></td>
+            <td>{{ kunde.homepage }}</td>
+        </tr>
+        <tr>
+            <td><label>Umsatz</label></td>
+            <td>{{ kunde.umsatz }}</td>
         </tr>
         <tr>
             <td><label>Newsletter?</label></td>

@@ -24,7 +24,7 @@ import {Router} from '@angular/router'
 
 import {HOME_PATH} from '../../app/routes'
 import {log} from '../../shared'
-import {Kunde, emailValidator} from '../shared'
+import {emailValidator, Kunde} from '../shared'
 import {KundeService} from '../shared/kunde.service'
 
 /**
@@ -66,12 +66,12 @@ export default class CreateKundeComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private kundeService: KundeService, private router: Router,
-        private nachnameService: Nachname) {
+        private kundeService: KundeService, private router: Router) {
+      //  private titleService: Title) {
         console.log('CreateKundeComponent.constructor()')
         if (router !== undefined) {
-            console.log('Injizierter Router:', router)
-        }
+         console.log('Injizierter Router:', router)
+       }
     }
 
     /**
