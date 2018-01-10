@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+import Adresse
+import Umsatz
 import * as _ from 'lodash'
 import * as moment from 'moment'
 import 'moment/locale/de'
-import _date = moment.unitOfTime._date;
+import _date = moment.unitOfTime._date
 
 moment.locale('de')
 
@@ -35,17 +36,14 @@ export enum GeschlechtType {
 export enum FamilienstandType {
     LEDIG = 'L',
     VERHEIRATET = 'VH',
-    GESCHIEDEN ='G',
-    VERWITWET ='VW',
+    GESCHIEDEN = 'G',
+    VERWITWET = 'VW',
 }
-export enum InteressenType{
-    SPORT = 'S',
-    LESEN = 'L',
-    REISEN = 'R',
-}
-
-
-
+// export enum InteressenType {
+//    SPORT = 'S',
+//    LESEN = 'L',
+//    REISEN = 'R',
+// }
 
 /**
  * Gemeinsame Datenfelder unabh&auml;ngig, ob die Buchdaten von einem Server
@@ -53,22 +51,17 @@ export enum InteressenType{
  */
 export interface KundeShared {
     _id?: string|undefined
-    name?: string|undefined
+    nachname?: string|undefined
     geschlecht?: GeschlechtType|undefined
     familienstand: FamilienstandType|undefined
- //   kategorie: number|undefined
- //   datum: _date|undefined
+    kategorie: number|undefined
     newsletter: boolean|undefined
     email: string|undefined
     geburtsdatum: string|undefined
-    betrag: number|undefined
-    waehrung: string|undefined
+    umsatz: Umsatz|undefined
     homepage: string|undefined
-    interessen: InteressenType|undefined
-    ort: string|undefined
-    plz: number|undefined
- //   username: string|undefined
-    kategorie:number|undefined
+    adresse: Adresse|undefined
+    user: string|undefined
 }
 
 /**
@@ -81,8 +74,8 @@ export interface KundeShared {
  * </ul>
  */
 export interface KundeServer extends KundeShared {
-    rating: number|undefined
-    schlagwoerter?: Array<string>|undefined
+    kategorie: number|undefined
+    interessen?: Array<string>|undefined
 }
 
 /**
@@ -93,9 +86,9 @@ export interface KundeServer extends KundeShared {
  * </ul>
  */
 export interface KundeForm extends KundeShared {
-    rating: string
-    geschaeftskunde?: boolean
-    privatkunde?: boolean
+    kategorie: number
+    lesen?: boolean
+    reisen?: boolean
 }
 
 /**
@@ -103,60 +96,47 @@ export interface KundeForm extends KundeShared {
  * Functions fuer Abfragen und Aenderungen.
  */
 export class Kunde {
-    ratingArray: Array<boolean> = []
+    kategorieArray: Array<boolean> = []
 
     // wird aufgerufen von fromServer() oder von fromForm()
     private constructor(
         // tslint:disable-next-line:variable-name
         public _id: string|undefined,
-        public name: string|undefined,
-        public rating: number|undefined,
+        public nachname: string|undefined,
+        public kategorie: number|undefined,
         public familienstand: FamilienstandType|undefined,
         public geschlecht: GeschlechtType|undefined,
         public geburtsdatum: moment.Moment|undefined,
 
-        public kategorie: number|undefined,
         public newsletter: boolean|undefined,
-        public schlagwoerter: Array<string>|undefined,
-//selbst hinzugefügt
-        public username: string|undefined,
-        public ort: string|undefined,
-        public plz: number|undefined,
+        public user: string|undefined,
+        public adresse: Adresse|undefined,
         public homepage: string|undefined,
-        public betrag: number|undefined,
-        public waehrung:string|undefined,
-        public interessen: InteressenType|undefined,
-//.
-        public email: string|undefined)
-    {
+        public umsatz: Umsatz|undefined,
+        public interessen: Array<string>|undefined,
+        public email: string|undefined) {
         this._id = _id || undefined
-        this.name = name || undefined
-        this.rating = rating || undefined
+        this.nachname = nachname || undefined
+        this.kategorie = kategorie || undefined
         this.familienstand = familienstand || undefined
         this.geschlecht = geschlecht || undefined
         this.geburtsdatum =
             geburtsdatum !== undefined ? geburtsdatum : moment(new Date().toISOString())
-        this.kategorie = kategorie || undefined
         this.newsletter = newsletter || undefined
-//selbst hinzugefügt
-        this.username = username|| undefined
-        this.ort = ort|| undefined
-        this.plz = plz|| undefined
-        this.homepage = homepage|| undefined
-        this.betrag = betrag|| undefined
-        this.waehrung = waehrung|| undefined
-        this.interessen = interessen|| undefined
-//.
+        this.user = user || undefined
+        this.adresse = adresse || undefined
+        this.homepage = homepage || undefined
+        this.umsatz = umsatz || undefined
 
-        if (schlagwoerter === undefined) {
-            this.schlagwoerter = []
+        if (interessen === undefined) {
+            this.interessen = []
         } else {
-            const tmpSchlagwoerter = schlagwoerter as Array<string>
-            this.schlagwoerter = tmpSchlagwoerter
+            const tmpInteressen = interessen as Array<string>
+            this.interessen = tmpInteressen
         }
-        if (rating !== undefined) {
-            _.times(rating - MIN_RATING, () => this.ratingArray.push(true))
-            _.times(MAX_RATING - rating, () => this.ratingArray.push(false))
+        if (kategorie !== undefined) {
+            _.times(kategorie - MIN_RATING, () => this.kategorieArray.push(true))
+            _.times(MAX_RATING - kategorie, () => this.kategorieArray.push(false))
         }
         this.email = email || undefined
     }
@@ -174,10 +154,10 @@ export class Kunde {
             datum = moment(tmp)
         }
         const kunde = new Kunde(
-            kundeServer._id, kundeServer.name, kundeServer.rating, kundeServer.familienstand,
-            kundeServer.geschlecht, datum, kundeServer.kategorie,//rabatt gelöscht!
-            kundeServer.newsletter, kundeServer.schlagwoerter, kundeServer.email,kundeServer.geburtsdatum,
-            kundeServer.ort, kundeServer.plz, kundeServer.homepage, kundeServer.waehrung, kundeServer.betrag,kundeServer.interessen)
+            kundeServer._id, kundeServer.nachname, kundeServer.kategorie, kundeServer.familienstand,
+            kundeServer.geschlecht, datum,
+            kundeServer.newsletter, kundeServer.interessen, kundeServer.email, kundeServer.geburtsdatum,
+            kundeServer.adresse, kundeServer.homepage, kundeServer.umsatz)
         console.log('Kunde.fromServer(): kunde=', kunde)
         return kunde
     }
@@ -188,12 +168,12 @@ export class Kunde {
      * @return Das initialisierte Kunde-Objekt
      */
     static fromForm(kundeForm: KundeForm) {
-        const schlagwoerter: Array<string> = []
-        if (kundeForm.geschaeftskunde) {
-            schlagwoerter.push('GESCHAEFTSKUNDE')
+        const interessen: Array<string> = []
+        if (kundeForm.lesen) {
+            interessen.push('Lesen')
         }
-        if (kundeForm.privatkunde) {
-            schlagwoerter.push('PRIVATKUNDE')
+        if (kundeForm.reisen) {
+            interessen.push('Reisen')
         }
 
         const datumMoment = kundeForm.geburtsdatum === undefined ?
@@ -201,10 +181,10 @@ export class Kunde {
             moment(kundeForm.geburtsdatum as string)
 
         const kunde = new Kunde(
-            kundeForm._id, kundeForm.name, kundeForm.rating, kundeForm.familienstand,
-            kundeForm.geschlecht, datumMoment, kundeForm.kategorie,
-            kundeForm.newsletter, schlagwoerter, kundeForm.email,kundeForm.geburtsdatum, kundeForm.ort, kundeForm.plz,
-            kundeForm.homepage, kundeForm.betrag, kundeForm.waehrung,kundeForm.interessen)
+            kundeForm._id, kundeForm.nachname, kundeForm.kategorie, kundeForm.familienstand,
+            kundeForm.geschlecht, datumMoment,
+            kundeForm.newsletter, interessen, kundeForm.email, kundeForm.geburtsdatum, kundeForm.adresse,
+            kundeForm.homepage, kundeForm.umsatz)
         console.log('Kunde.fromForm(): kunde=', kunde)
         return kunde
     }
@@ -248,8 +228,8 @@ export class Kunde {
      * Die Bewertung ("rating") des Buches um 1 erh&ouml;hen
      */
     rateUp() {
-        if (this.rating !== undefined && this.rating < MAX_RATING) {
-            this.rating++
+        if (this.kategorie !== undefined && this.kategorie < MAX_RATING) {
+            this.kategorie++
         }
     }
 
@@ -257,8 +237,8 @@ export class Kunde {
      * Die Bewertung ("rating") des Buches um 1 erniedrigen
      */
     rateDown() {
-        if (this.rating !== undefined && this.rating > MIN_RATING) {
-            this.rating--
+        if (this.kategorie !== undefined && this.kategorie > MIN_RATING) {
+            this.kategorie--
         }
     }
 
@@ -281,26 +261,21 @@ export class Kunde {
      * @param rabatt Der neue Rabatt
      */
     updateStammdaten(
-        name: string, familienstandType: FamilienstandType, geschlechtType: GeschlechtType, rating: number,
-        datum: moment.Moment|undefined, kategorie: number|undefined,
-        username: string|undefined, ort: string|undefined,plz:number|undefined, homepage: string|undefined,
-        betrag: number|undefined,waehrung: string|undefined, interessen: InteressenType|undefined ) {
-        this.name = name
+        nachname: string, familienstandType: FamilienstandType, geschlechtType: GeschlechtType, kategorie: number,
+        datum: moment.Moment|undefined,
+        user: string|undefined, adresse: Adresse|undefined, homepage: string|undefined,
+        umsatz: Umsatz|undefined) {
+        this.nachname = nachname
         this.familienstand = familienstandType
         this.geschlecht = geschlechtType
-        this.rating = rating
-        this.ratingArray = []
-        _.times(rating - MIN_RATING, () => this.ratingArray.push(true))
-        this.geburtsdatum = datum
         this.kategorie = kategorie
-
-        this.username = username
-        this.ort = ort
-        this.plz = plz
+        this.kategorieArray = []
+        _.times(kategorie - MIN_RATING, () => this.kategorieArray.push(true))
+        this.geburtsdatum = datum
+        this.user = user
+        this.adresse = adresse
         this.homepage = homepage
-        this.betrag = betrag
-        this.waehrung = waehrung
-        this.interessen = interessen
+        this.umsatz = umsatz
     }
 
     /**
@@ -308,11 +283,11 @@ export class Kunde {
      * @return true, falls es mindestens ein Schlagwort gibt. Sonst false.
      */
     hasSchlagwoerter() {
-        if (this.schlagwoerter === undefined) {
+        if (this.interessen === undefined) {
             return false
         }
-        const tmpSchlagwoerter = this.schlagwoerter as Array<string>
-        return tmpSchlagwoerter.length !== 0
+        const tmpInteressen = this.interessen as Array<string>
+        return tmpInteressen.length !== 0
     }
 
     /**
@@ -320,56 +295,53 @@ export class Kunde {
      * @param schlagwort das zu &uuml;berpr&uuml;fende Schlagwort
      * @return true, falls es das Schlagwort gibt. Sonst false.
      */
-    hasSchlagwort(schlagwort: string) {
-        if (this.schlagwoerter === undefined) {
+    hasSchlagwort(interessen: string) {
+        if (this.interessen === undefined) {
             return false
         }
-        const tmpSchlagwoerter = this.schlagwoerter as Array<string>
-        return tmpSchlagwoerter.includes(schlagwort)
+        const tmpInteressen = this.interessen as Array<string>
+        return tmpInteressen.includes(interessen)
     }
 
     /**
      * Aktualisierung der Schlagw&ouml;rter des Kunde-Objekts.
-     * @param geschaeftskunde ist das Schlagwort JAVASCRIPT gesetzt
-     * @param privatkunde ist das Schlagwort TYPESCRIPT gesetzt
+     * @param lesen ist das Schlagwort JAVASCRIPT gesetzt
+     * @param reisen ist das Schlagwort TYPESCRIPT gesetzt
      */
-    updateSchlagwoerter(geschaeftskunde: boolean, privatkunde: boolean) {
+    updateSchlagwoerter(lesen: boolean, reisen: boolean) {
         this.resetSchlagwoerter()
-        if (geschaeftskunde) {
-            this.addSchlagwort('GESCHAEFTSKUNDE')
+        if (lesen) {
+            this.addSchlagwort('Lesen')
         }
-        if (privatkunde) {
-            this.addSchlagwort('PRIVATKUNDE')
+        if (reisen) {
+            this.addSchlagwort('Reisen')
         }
     }
 
     /**
      * Konvertierung des Buchobjektes in ein JSON-Objekt f&uuml;r den RESTful
      * Web Service.
+     // tslint:disable-next-line:max-line-length
      * @return {{_id: (string|any); name: (string|any); rating: (number|any); familienstand: (FamilienstandType|any); geschlecht: (GeschlechtType|any); datum: string; kategorie: (number|any); newsletter: (boolean|any); schlagwoerter: (Array<string>|any); email: (string|any); username: (string|any); adresse: (Adresse|any); homepage: (string|any); umsatz: (Umsatz|any); interessen: (InteressenType|any)}} JSON-Objekt f&uuml;r den RESTful Web Service
      */
     toJSON(): KundeServer {
         const datum = this.geburtsdatum === undefined ?
             undefined :
             this.geburtsdatum.format('YYYY-MM-DD')
-        return <KundeServer>{  //<KundeServer> hinzugefüht !!
+        return {
             _id: this._id,
-            name: this.name,
-            rating: this.rating,
+            nachname: this.nachname,
+            kategorie: this.kategorie,
             familienstand: this.familienstand,
             geschlecht: this.geschlecht,
             datum,
-            kategorie: this.kategorie,
             newsletter: this.newsletter,
-            schlagwoerter: this.schlagwoerter,
+            interessen: this.interessen,
             email: this.email,
-            username: this.username,
-            ort: this.ort,
-            plz: this.plz,
+            user: this.user,
+            adresse: this.adresse,
             homepage: this.homepage,
-            betrag: this.betrag,
-            waehrung: this.waehrung,
-            interessen: this.interessen
+            umsatz: this.umsatz,
         }
     }
 
@@ -378,14 +350,14 @@ export class Kunde {
     }
 
     private resetSchlagwoerter() {
-        this.schlagwoerter = []
+        this.interessen = []
     }
 
-    private addSchlagwort(schlagwort: string) {
-        if (this.schlagwoerter === undefined) {
-            this.schlagwoerter = []
+    private addSchlagwort(interessen: string) {
+        if (this.interessen === undefined) {
+            this.interessen = []
         }
-        const tmpSchlagwoerter = this.schlagwoerter as Array<string>
-        tmpSchlagwoerter.push(schlagwort)
+        const tmpSchlagwoerter = this.interessen as Array<string>
+        tmpSchlagwoerter.push(interessen)
     }
 }
