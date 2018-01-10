@@ -41,7 +41,7 @@
                         <tr>
                             <th>Nr.</th>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>Nachname</th>
                             <th>Geschlecht</th>
                             <th>Familienstand</th>
                             <th>Kategorie</th>
@@ -76,7 +76,7 @@
                             (click)="onSelect(b)" [@easeOut]="'in'">
                             <td>{{ i + 1 }}</td>
                             <td>{{ b._id }}</td>
-                            <td>{{ b.name }}</td>
+                            <td>{{ b.nachname }}</td>
                             <td>
                                 <span [ngSwitch]="b.geschlecht">
                                     <span *ngSwitchCase="'MAENNLICH'">m&aumlnnlich</span>

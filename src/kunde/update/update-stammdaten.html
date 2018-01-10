@@ -15,14 +15,14 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <form [formGroup]="form" role="form">
-    <div class="form-group row" [class.has-danger]="!name.valid && name.touched">
-        <label for="nameInput" class="col col-2 form-control-label">
+    <div class="form-group row" [class.has-danger]="!nachname.valid && nachname.touched">
+        <label for="nachnameInput" class="col col-2 form-control-label">
             Nachname *
         </label>
         <div class="col col-10">
-            <input id="nameInput" placeholder="Name" class="form-control" autofocus type="text" formControlName="name">
-            <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!name.valid && name.touched">
-                Ein Name muss mit einem Buchstaben oder einer Ziffer beginnen.
+            <input id="nachnameInput" placeholder="Nachname" class="form-control" autofocus type="text" formControlName="nachname">
+            <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!nachname.valid && nachname.touched">
+                Ein Nachname muss mit einem Buchstaben oder einer Ziffer beginnen.
             </div>
         </div>
     </div>

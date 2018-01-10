@@ -36,7 +36,7 @@ export default class UpdateStammdatenComponent implements OnInit {
     @Input() kunde: Kunde
 
     form: FormGroup
-    name: FormControl
+    nachname: FormControl
     familienstand: FormControl
     geschlecht: FormControl
     kategorie: FormControl

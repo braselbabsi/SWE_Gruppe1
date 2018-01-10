@@ -30,7 +30,7 @@ import {KundeService} from '../shared/kunde.service'
     animations: [fadeIn],
 })
 export default class SuchformularComponent {
-    name: string|undefined
+    nachname: string|undefined
     geschlecht: GeschlechtType|undefined
     familienstand: FamilienstandType|undefined
     geschaeftskunden = false
@@ -55,7 +55,7 @@ export default class SuchformularComponent {
     @log
     onFind() {
         const suchkriterien: any = {
-            name: this.name,
+            nachname: this.nachname,
             geschlecht: this.geschlecht,
             familienstand: this.familienstand,
             geschaeftskunden: this.geschaeftskunden,
