@@ -96,7 +96,7 @@ export class KundeService {
     }
 
     @log
-    observeBuch(next: (kunde: Kunde) => void) {
+    observeKunde(next: (kunde: Kunde) => void) {
         return this.kundeEmitter.subscribe(next)
     }
 

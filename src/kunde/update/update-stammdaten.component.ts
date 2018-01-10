@@ -96,8 +96,8 @@ export default class UpdateStammdatenComponent implements OnInit {
 
         // kategorie, kategorie und rabatt koennen im Formular nicht geaendert werden
         this.kunde.updateStammdaten(
-            this.name.value, this.familienstand.value, this.geschlecht.value
-            , this.kunde.kategorie , this.kunde.newsletter, this.kunde.interessen,
+            this.name.value, this.familienstand.value, this.geschlecht.value,
+            this.kunde.kategorie, this.kunde.newsletter, this.kunde.interessen,
             this.kunde.email, this.kunde.adresse, this.kunde.homepage,
             this.kunde.umsatz)
         console.log('kunde=', this.kunde)
