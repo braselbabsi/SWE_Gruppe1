@@ -96,7 +96,7 @@ export class KundeService {
     }
 
     @log
-    observeKunde(next: (kunde: Kunde) => void) {
+    observeBuch(next: (kunde: Kunde) => void) {
         return this.kundeEmitter.subscribe(next)
     }
 
@@ -186,8 +186,6 @@ export class KundeService {
         console.log('KundeService.findById(): GET-Request')
         this.httpClient.get<KundeServer>(uri).subscribe(nextFn, errorFn)
     }
-
-
 
     /**
      * Ein neues Kunde anlegen
@@ -312,7 +310,7 @@ export class KundeService {
                 kunden.map(kunde => kunde._id) as Array<string>
             console.log('KundeService.createBarChart(): labels: ', labels)
             const ratingData =
-                kunden.map(kunde => kunde.rating) as Array<number>
+                kunden.map(kunde => kunde.kategorie) as Array<number>
 
             const datasets: Array<ChartDataSets> =
                 [{label: 'Bewertung', data: ratingData}]
@@ -338,7 +336,7 @@ export class KundeService {
             const labels =
                 kunden.map(kunde => kunde._id) as Array<string>
             const ratingData =
-                kunden.map(kunde => kunde.rating) as Array<number>
+                kunden.map(kunde => kunde.kategorie) as Array<number>
 
             const datasets: Array<ChartDataSets> =
                 [{label: 'Bewertung', data: ratingData}]
@@ -366,7 +364,7 @@ export class KundeService {
             const labels =
                 kunden.map(kunde => kunde._id) as Array<string>
             const ratingData =
-                kunden.map(kunde => kunde.rating) as Array<number>
+                kunden.map(kunde => kunde.kategorie) as Array<number>
 
             const backgroundColor =
                 new Array<string>(ratingData.length)
@@ -414,20 +412,20 @@ export class KundeService {
             const value = suchkriterien.familienstand as string
             httpParams = httpParams.set('familienstand', value)
         }
-        if (suchkriterien.rating !== undefined) {
-            const value = suchkriterien.rating.toString()
+        if (suchkriterien.kategorie !== undefined) {
+            const value = suchkriterien.kategorie.toString()
             httpParams = httpParams.set('rating', value)
         }
-        if (suchkriterien.geschlecht !== undefined){
+        if (suchkriterien.geschlecht !== undefined) {
            // suchkriterien.geschlecht.length !== 0)
             const value = suchkriterien.geschlecht as string
             httpParams = httpParams.set('geschlecht', value)
         }
-        if (suchkriterien.geschaeftskunde) {
-            httpParams = httpParams.set('geschaeftskunde', 'true')
+        if (suchkriterien.lesen) {
+            httpParams = httpParams.set('lesen', 'true')
         }
-        if (suchkriterien.privatkunde) {
-            httpParams = httpParams.set('privatkunde', 'true')
+        if (suchkriterien.reisen) {
+            httpParams = httpParams.set('reisen', 'true')
         }
         return httpParams
     }
