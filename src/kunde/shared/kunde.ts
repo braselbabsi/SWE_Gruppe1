@@ -51,7 +51,7 @@ export enum FamilienstandType {
  */
 export interface KundeShared {
     _id?: string|undefined
-    name?: string|undefined
+    nachname?: string|undefined
     geschlecht?: GeschlechtType|undefined
     familienstand: FamilienstandType|undefined
     kategorie: number|undefined
@@ -102,7 +102,7 @@ export class Kunde {
     private constructor(
         // tslint:disable-next-line:variable-name
         public _id: string|undefined,
-        public name: string|undefined,
+        public nachname: string|undefined,
         public kategorie: number|undefined,
         public familienstand: FamilienstandType|undefined,
         public geschlecht: GeschlechtType|undefined,
@@ -116,7 +116,7 @@ export class Kunde {
         public interessen: Array<string>|undefined,
         public email: string|undefined) {
         this._id = _id || undefined
-        this.name = name || undefined
+        this.nachname = nachname || undefined
         this.kategorie = kategorie || undefined
         this.familienstand = familienstand || undefined
         this.geschlecht = geschlecht || undefined
@@ -154,7 +154,7 @@ export class Kunde {
             datum = moment(tmp)
         }
         const kunde = new Kunde(
-            kundeServer._id, kundeServer.name, kundeServer.kategorie, kundeServer.familienstand,
+            kundeServer._id, kundeServer.nachname, kundeServer.kategorie, kundeServer.familienstand,
             kundeServer.geschlecht, datum,
             kundeServer.newsletter, kundeServer.interessen, kundeServer.email, kundeServer.geburtsdatum,
             kundeServer.adresse, kundeServer.homepage, kundeServer.umsatz)
@@ -181,7 +181,7 @@ export class Kunde {
             moment(kundeForm.geburtsdatum as string)
 
         const kunde = new Kunde(
-            kundeForm._id, kundeForm.name, kundeForm.kategorie, kundeForm.familienstand,
+            kundeForm._id, kundeForm.nachname, kundeForm.kategorie, kundeForm.familienstand,
             kundeForm.geschlecht, datumMoment,
             kundeForm.newsletter, interessen, kundeForm.email, kundeForm.geburtsdatum, kundeForm.adresse,
             kundeForm.homepage, kundeForm.umsatz)
@@ -261,11 +261,11 @@ export class Kunde {
      * @param rabatt Der neue Rabatt
      */
     updateStammdaten(
-        name: string, familienstandType: FamilienstandType, geschlechtType: GeschlechtType, kategorie: number,
+        nachname: string, familienstandType: FamilienstandType, geschlechtType: GeschlechtType, kategorie: number,
         datum: moment.Moment|undefined,
         user: string|undefined, adresse: Adresse|undefined, homepage: string|undefined,
         umsatz: Umsatz|undefined) {
-        this.name = name
+        this.nachname = nachname
         this.familienstand = familienstandType
         this.geschlecht = geschlechtType
         this.kategorie = kategorie
@@ -330,7 +330,7 @@ export class Kunde {
             this.geburtsdatum.format('YYYY-MM-DD')
         return {
             _id: this._id,
-            name: this.name,
+            nachname: this.nachname,
             kategorie: this.kategorie,
             familienstand: this.familienstand,
             geschlecht: this.geschlecht,
