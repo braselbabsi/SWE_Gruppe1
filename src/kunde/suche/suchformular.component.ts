@@ -48,7 +48,7 @@ export default class SuchformularComponent {
 
     /**
      * Suche nach B&uuml;chern, die den spezfizierten Suchkriterien entsprechen
-     * @param suchkriterien: Suchkriterien vom Typ IBuchForm
+     * @param suchkriterien: Suchkriterien vom Typ IKundeForm
      * @return false, um das durch den Button-Klick ausgel&ouml;ste Ereignis
      *         zu konsumieren.
      */

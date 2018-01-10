@@ -24,18 +24,18 @@ import {Kunde} from '../shared'
 import {KundeService} from '../shared/kunde.service'
 
 /**
- * Komponente f&uuml;r das Tag <code>hs-update-buch</code> mit Kindkomponenten
+ * Komponente f&uuml;r das Tag <code>hs-update-kunde</code> mit Kindkomponenten
  * f&uuml;r die folgenden Tags:
  * <ul>
  *  <li> <code>hs-stammdaten</code>
- *  <li> <code>hs-schlagwoerter</code>
+ *  <li> <code>hs-interessen</code>
  * </ul>
  */
 @Component({
-    selector: 'hs-update-buch',
-    templateUrl: './update-buch.html',
+    selector: 'hs-update-kunde',
+    templateUrl: './update-kunde.html',
 })
-export default class UpdateBuchComponent implements OnInit {
+export default class UpdateKundeComponent implements OnInit {
     kunde: Kunde|undefined
     errorMsg: string|undefined
 
@@ -43,14 +43,14 @@ export default class UpdateBuchComponent implements OnInit {
         private readonly kundeService: KundeService,
         private readonly titleService: Title,
         private readonly route: ActivatedRoute) {
-        console.log('UpdateBuchComponent.constructor()')
+        console.log('UpdateKundeComponent.constructor()')
     }
 
     @log
     ngOnInit() {
-        // Die Beobachtung starten, ob es ein zu aktualisierendes Buch oder
+        // Die Beobachtung starten, ob es ein zu aktualisierendes Kunde oder
         // einen Fehler gibt.
-        this.observeBuch()
+        this.observeKunde()
         this.observeError()
 
         // Pfad-Parameter aus /update/:id
@@ -69,16 +69,16 @@ export default class UpdateBuchComponent implements OnInit {
     }
 
     /**
-     * Beobachten, ob es ein zu aktualisierendes Buch gibt.
+     * Beobachten, ob es ein zu aktualisierendes Kunde gibt.
      */
-    private observeBuch() {
+    private observeKunde() {
         const next: (kunde: Kunde) => void = kunde => {
             this.errorMsg = undefined
             this.kunde = kunde
             console.log('UpdateKunde.kunde=', this.kunde)
         }
 
-        this.kundeService.observeBuch(next)
+        this.kundeService.observeKunde(next)
     }
 
     /**

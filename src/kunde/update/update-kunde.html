@@ -25,10 +25,10 @@
                 Stammdaten
             </a>
         </li>
-        <li class="nav-item" *ngIf="kunde.schlagwoerter.length !== 0">
-            <a class="nav-link" id="schlagwoerter-update-tab" href="#schlagwoerter"
+        <li class="nav-item" *ngIf="kunde.interessen.length !== 0">
+            <a class="nav-link" id="interessen-update-tab" href="#interessen"
                 data-toggle="tab" role="tab"
-                aria-controls="schlagwoerter" aria-expanded="true">
+                aria-controls="interessen" aria-expanded="true">
                 Schlagw&ouml;rter
             </a>
         </li>
@@ -42,11 +42,11 @@
                 </hs-update-stammdaten>
             </div>
         </div>
-        <div class="tab-pane fade" id="schlagwoerter"
-            role="tabpanel" aria-labelledby="schlagwoerter-tab">
+        <div class="tab-pane fade" id="interessen"
+            role="tabpanel" aria-labelledby="interessen-tab">
             <div class="mt-1">
-                <hs-update-schlagwoerter [kunde]="kunde">
-                </hs-update-schlagwoerter>
+                <hs-update-interessen [kunde]="kunde">
+                </hs-update-interessen>
             </div>
         </div>
     </div>

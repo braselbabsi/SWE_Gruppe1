@@ -25,14 +25,14 @@ import {Kunde} from '../shared'
 import {KundeService} from '../shared/kunde.service'
 
 /**
- * Komponente f&uuml;r das Tag <code>hs-schlagwoerter</code>
+ * Komponente f&uuml;r das Tag <code>hs-interessen</code>
  */
 @Component({
-    selector: 'hs-update-schlagwoerter',
-    templateUrl: './update-schlagwoerter.html',
+    selector: 'hs-update-interessen',
+    templateUrl: './update-interessen.html',
 })
-export default class UpdateSchlagwoerterComponent implements OnInit {
-    // <hs-schlagwoerter [kunde]="...">
+export default class UpdateInteressenComponent implements OnInit {
+    // <hs-interessen [kunde]="...">
     @Input() kunde: Kunde
 
     form: FormGroup
@@ -43,12 +43,12 @@ export default class UpdateSchlagwoerterComponent implements OnInit {
         private readonly formBuilder: FormBuilder,
         private readonly kundeService: KundeService,
         private readonly router: Router) {
-        console.log('UpdateSchlagwoerterComponent.constructor()')
+        console.log('UpdateInteressenComponent.constructor()')
     }
 
     /**
      * Das Formular als Gruppe von Controls initialisieren und mit den
-     * Schlagwoertern des zu &auml;ndernden Buchs vorbelegen.
+     * Interessenn des zu &auml;ndernden Kunden vorbelegen.
      */
     @log
     ngOnInit() {
@@ -68,7 +68,7 @@ export default class UpdateSchlagwoerterComponent implements OnInit {
     }
 
     /**
-     * Die aktuellen Schlagwoerter f&uuml;r das angezeigte Kunde-Objekt
+     * Die aktuellen Interessen f&uuml;r das angezeigte Kunde-Objekt
      * zur&uuml;ckschreiben.
      * @return false, um das durch den Button-Klick ausgel&ouml;ste Ereignis
      *         zu konsumieren.
@@ -85,20 +85,20 @@ export default class UpdateSchlagwoerterComponent implements OnInit {
             return
         }
 
-        this.kunde.updateSchlagwoerter(
+        this.kunde.updateInteressen(
             this.geschaeftskunde.value, this.privatkunde.value)
         console.log('kunde=', this.kunde)
 
         const successFn = () => {
             console.log(
-                `UpdateSchlagwoerterComponent: successFn: path: ${HOME_PATH}`)
+                `UpdateInteressenComponent: successFn: path: ${HOME_PATH}`)
             this.router.navigate([HOME_PATH])
         }
         const errFn: (status: number,
                       errors: {[s: string]: any}|undefined) => void =
             (status, errors = undefined) => {
-            console.error(`UpdateSchlagwoerterComponent.onUpdate(): errFn(): status: ${status}`)
-            console.error('UpdateSchlagwoerterComponent.onUpdate(): errFn(): errors', errors)
+            console.error(`UpdateInteressenComponent.onUpdate(): errFn(): status: ${status}`)
+            console.error('UpdateInteressenComponent.onUpdate(): errFn(): errors', errors)
         }
         this.kundeService.update(this.kunde, successFn, errFn)
 
@@ -109,6 +109,6 @@ export default class UpdateSchlagwoerterComponent implements OnInit {
     }
 
     toString() {
-        return 'UpdateSchlagwoerterComponent'
+        return 'UpdateInteressenComponent'
     }
 }

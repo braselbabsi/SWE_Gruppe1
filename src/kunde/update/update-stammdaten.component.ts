@@ -39,7 +39,7 @@ export default class UpdateStammdatenComponent implements OnInit {
     name: FormControl
     familienstand: FormControl
     geschlecht: FormControl
-    rating: FormControl
+    kategorie: FormControl
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -50,7 +50,7 @@ export default class UpdateStammdatenComponent implements OnInit {
 
     /**
      * Das Formular als Gruppe von Controls initialisieren und mit den
-     * Stammdaten des zu &auml;ndernden Buchs vorbelegen.
+     * Stammdaten des zu &auml;ndernden Kunden vorbelegen.
      */
     @log
     ngOnInit() {
@@ -63,7 +63,7 @@ export default class UpdateStammdatenComponent implements OnInit {
         ]))
         this.familienstand = new FormControl(this.kunde.familienstand, Validators.required)
         this.geschlecht = new FormControl(this.kunde.geschlecht)
-        this.rating = new FormControl(this.kunde.rating)
+        this.kategorie = new FormControl(this.kunde.kategorie)
         // this.geburtsdatum = new Control(this.kunde.geburtsdatum.toISOString())
 
         this.form = this.formBuilder.group({
@@ -71,7 +71,7 @@ export default class UpdateStammdatenComponent implements OnInit {
             name: this.name,
             familienstand: this.familienstand,
             geschlecht: this.geschlecht,
-            rating: this.rating,
+            kategorie: this.kategorie,
             // geburtsdatum: this.geburtsdatum
         })
     }
@@ -94,12 +94,12 @@ export default class UpdateStammdatenComponent implements OnInit {
             return
         }
 
-        // rating, kategorie und rabatt koennen im Formular nicht geaendert werden
+        // kategorie, kategorie und rabatt koennen im Formular nicht geaendert werden
         this.kunde.updateStammdaten(
             this.name.value, this.familienstand.value, this.geschlecht.value
-            , this.kunde.rating , this.kunde.newsletter, this.kunde.schlagwoerter,
-            this.kunde.email, this.kunde.ort,this.kunde.plz, this.kunde.homepage,
-            this.kunde.betrag, this.kunde.waehrung, this.kunde.interessen)
+            , this.kunde.kategorie , this.kunde.newsletter, this.kunde.interessen,
+            this.kunde.email, this.kunde.adresse, this.kunde.homepage,
+            this.kunde.umsatz)
         console.log('kunde=', this.kunde)
 
         
