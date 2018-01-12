@@ -29,7 +29,7 @@ import SucheKundenComponent from '../kunde/suche/suche-kunden.component'
 import UpdateKundeComponent from '../kunde/update/update-kunde.component'
 
 export const HOME_PATH = 'home'
-export const DETAILS_KUNDE_PATH = 'details
+export const DETAILS_KUNDE_PATH = 'details'
 // https://angular.io/docs/ts/latest/guide/router.html
 /**
  * Route-Definitionen f&uuml;r AppModule.
