@@ -1,5 +1,4 @@
 // tslint:disable:max-file-line-count
-
 /*
  * Copyright (C) 2015 - 2017 Juergen Zimmermann, Hochschule Karlsruhe
  *
@@ -24,7 +23,6 @@ import * as moment from 'moment'
 import 'moment/locale/de'
 
 // import _date = moment.unitOfTime._date
-
 moment.locale('de')
 
 const MIN_RATING = 0
@@ -46,7 +44,6 @@ export enum FamilienstandType {
 //    LESEN = 'L',
 //    REISEN = 'R',
 // }
-
 /**
  * Gemeinsame Datenfelder unabh&auml;ngig, ob die Buchdaten von einem Server
  * (z.B. RESTful Web Service) oder von einem Formular kommen.
@@ -252,7 +249,7 @@ export class Kunde {
      * @param verlag der Name des Verlags
      * @return true, falls das Kunde dem GeschlechtType zugeordnet ist. Sonst false.
      */
-    hasVerlag(geschlecht: string) {
+    hasGeschlecht(geschlecht: string) {
         return this.geschlecht === geschlecht
     }
 
@@ -266,21 +263,23 @@ export class Kunde {
      * @param rabatt Der neue Rabatt
      */
     updateStammdaten(
-        nachname: string, familienstandType: FamilienstandType, geschlechtType: GeschlechtType, kategorie: number,
-        datum: moment.Moment|undefined,
+        nachname: string, geschlechtType: GeschlechtType, familienstandType: FamilienstandType, kategorie: number,
+        newletter: boolean | undefined, email: string | undefined, datum: moment.Moment|undefined,
         user: string|undefined, adresse: Adresse|undefined, homepage: string|undefined,
         umsatz: Umsatz|undefined) {
         this.nachname = nachname
-        this.familienstand = familienstandType
         this.geschlecht = geschlechtType
+        this.familienstand = familienstandType
         this.kategorie = kategorie
         this.kategorieArray = []
         _.times(kategorie - MIN_RATING, () => this.kategorieArray.push(true))
+        this.newsletter = newletter
+        this.email = email
         this.geburtsdatum = datum
-        this.user = user
-        this.adresse = adresse
-        this.homepage = homepage
         this.umsatz = umsatz
+        this.homepage = homepage
+        this.adresse = adresse
+        this.user = user
     }
 
     /**
@@ -314,7 +313,7 @@ export class Kunde {
      * @param reisen ist das Interesse REISEN gesetzt
      * @param sport ist das Interesse SPORT gesetzt
      */
-    updateSchlagwoerter(lesen: boolean, reisen: boolean, sport: boolean) {
+    updateInteressen(lesen: boolean, reisen: boolean, sport: boolean) {
         this.resetInteressen()
         if (lesen) {
             this.addInteresse('Lesen')
