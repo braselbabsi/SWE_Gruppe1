@@ -16,18 +16,20 @@
  */
 import {ModuleWithProviders} from '@angular/core'
 import {RouterModule, Routes} from '@angular/router'
+
+import {AdminGuard} from '../auth/admin.guard'
+import HomeComponent from '../home/home.component'
 import CreateKundeComponent from '../kunde/create/create-kunde.component'
-import CreateBuchGuard from '../kunde/create/create-kunde.guard'
+import CreateKundeGuard from '../kunde/create/create-kunde.guard'
 import DetailsKundeComponent from '../kunde/details/details-kunde.component'
 import BalkendiagrammComponent from '../kunde/diagramme/balkendiagramm.component'
 import LiniendiagrammComponent from '../kunde/diagramme/liniendiagramm.component'
 import TortendiagrammComponent from '../kunde/diagramme/tortendiagramm.component'
 import SucheKundenComponent from '../kunde/suche/suche-kunden.component'
 import UpdateKundeComponent from '../kunde/update/update-kunde.component'
-import {AdminGuard} from '../auth/admin.guard'
-import HomeComponent from '../home/home.component'
+
 export const HOME_PATH = 'home'
-export const DETAILS_KUNDE_PATH = 'details'
+export const DETAILS_KUNDE_PATH = 'details
 // https://angular.io/docs/ts/latest/guide/router.html
 /**
  * Route-Definitionen f&uuml;r AppModule.
@@ -48,7 +50,7 @@ const routes: Routes = [
       path: 'create',
       component: CreateKundeComponent,
       canActivate: [AdminGuard],
-      canDeactivate: [CreateBuchGuard],
+      canDeactivate: [CreateKundeGuard],
     },
     {
       path: 'balkendiagramm',
