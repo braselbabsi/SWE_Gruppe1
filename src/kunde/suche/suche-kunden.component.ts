@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2015 - 2016 Juergen Zimmermann, Hochschule Karlsruhe.
- * 
+ *
  * Dies ist ein Test
  *
  * This program is free software: you can redistribute it and/or modify
