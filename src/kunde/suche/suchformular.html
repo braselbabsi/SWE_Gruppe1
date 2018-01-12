@@ -52,21 +52,21 @@
 
         <form (submit)="onFind()" role="form">
             <div class="form-group row">
-                <label for="nameInput" class="col col-2 form-control-label">
-                    Name
+                <label for="nachnameInput" class="col col-2 form-control-label">
+                    Nachname
                 </label>
                 <div class="col col-10">
                     <!-- type="search" funktioniert nicht mit Bootstrap -->
-                    <input id="nameInput"
-                        placeholder="Den Namen oder einen Teil davon eingeben"
-                        class="form-control" [(ngModel)]="name" name="name">
+                    <input id="NachnameInput"
+                        placeholder="Den Nachnamen oder einen Teil davon eingeben"
+                        class="form-control" [(ngModel)]="Nachname" name="Nachname">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col col-2 form-control-label">Geschlecht</label>
                 <div class="col col-10">
-                    <select class="form-control" [(ngModel)]="verlag" name="verlag">
+                    <select class="form-control" [(ngModel)]="geschlecht" name="geschlecht">
                         <option value=""></option>
                         <option value="MAENNLICH">m&aumlnnlich</option>
                         <option value="WEIBLICH">weiblich</option>
@@ -106,19 +106,25 @@
 
             <div class="form-group row">
                 <label for="interessenInput" class="col col-2 form-control-label">
-                    Schlagw&ouml;rter
+                    Interessen
                 </label>
                 <div class="col col-10">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" [(ngModel)]="geschaeftskunde" name="geschaeftskunde"/>
-                            gesch&aumlftskunde
+                            <input type="checkbox" [(ngModel)]="sport" name="sport"/>
+                            sport
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" [(ngModel)]="privatkunde" name="privatkunde"/>
-                            privatkunde
+                            <input type="checkbox" [(ngModel)]="lesen" name="lesen"/>
+                            lesen
+                        </label>
+                    </div>
+                   <div class="checkbox">
+                        <label>
+                            <input type="checkbox" [(ngModel)]="reisen" name="reisen"/>
+                            reisen
                         </label>
                     </div>
                 </div>
