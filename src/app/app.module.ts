@@ -19,8 +19,8 @@ import {NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 
 import {AUTH_PROVIDERS} from '../auth/auth.module'
-import BuchModule from '../kunde/kunde.module'
 import HomeModule from '../home/home.module'
+import KundeModule from '../kunde/kunde.module'
 import LayoutModule from '../layout/layout.module'
 import SharedModule from '../shared/shared.module'
 
@@ -39,7 +39,7 @@ import ROUTES from './routes'
     // Ein Modul muss die Module importieren, von denen es Funktionalitaet nutzt
     imports: [
         // Nur das Root Modul importiert BrowserModule
-        BrowserModule, SharedModule, HomeModule, BuchModule, LayoutModule,
+        BrowserModule, SharedModule, HomeModule, KundeModule, LayoutModule,
         AUTH_PROVIDERS, ROUTES,
     ],
 
