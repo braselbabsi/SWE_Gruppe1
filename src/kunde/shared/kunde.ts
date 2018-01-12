@@ -91,6 +91,7 @@ export interface KundeForm extends KundeShared {
     kategorie: number
     lesen?: boolean
     reisen?: boolean
+    sport?: boolean
 }
 
 /**
@@ -176,6 +177,9 @@ export class Kunde {
         if (kundeForm.reisen) {
             interessen.push('Reisen')
         }
+        if (kundeForm.sport) {
+            interessen.push('Sport')
+        }
 
         const datumMoment = kundeForm.geburtsdatum === undefined ?
             undefined :
@@ -210,10 +214,10 @@ export class Kunde {
     }
 
     /**
-     * Abfrage, ob im Buchtitel der angegebene Teilstring enthalten ist. Dabei
+     * Abfrage, ob im Kundenname der angegebene Teilstring enthalten ist. Dabei
      * wird nicht auf Gross-/Kleinschreibung geachtet.
-     * @param name Zu &uuml;berpr&uuml;fender Teilstring
-     * @return true, falls der Teilstring im Buchtitel enthalten ist. Sonst
+     * @param nachname Zu &uuml;berpr&uuml;fender Teilstring
+     * @return true, falls der Teilstring im Kundenname enthalten ist. Sonst
      *         false.
      */
     containsName(nachname: string) {
@@ -283,7 +287,7 @@ export class Kunde {
      * Abfrage, ob es zum Kunde auch Schlagw&ouml;rter gibt.
      * @return true, falls es mindestens ein Schlagwort gibt. Sonst false.
      */
-    hasSchlagwoerter() {
+    hasInteressen() {
         if (this.interessen === undefined) {
             return false
         }
@@ -296,7 +300,7 @@ export class Kunde {
      * @param schlagwort das zu &uuml;berpr&uuml;fende Schlagwort
      * @return true, falls es das Schlagwort gibt. Sonst false.
      */
-    hasSchlagwort(interessen: string) {
+    hasInteresse(interessen: string) {
         if (this.interessen === undefined) {
             return false
         }
@@ -305,22 +309,26 @@ export class Kunde {
     }
 
     /**
-     * Aktualisierung der Schlagw&ouml;rter des Kunde-Objekts.
-     * @param lesen ist das Schlagwort JAVASCRIPT gesetzt
-     * @param reisen ist das Schlagwort TYPESCRIPT gesetzt
+     * Aktualisierung der Interessen des Kunde-Objekts.
+     * @param lesen ist das Interesse LESEN gesetzt
+     * @param reisen ist das Interesse REISEN gesetzt
+     * @param sport ist das Interesse SPORT gesetzt
      */
-    updateSchlagwoerter(lesen: boolean, reisen: boolean) {
-        this.resetSchlagwoerter()
+    updateSchlagwoerter(lesen: boolean, reisen: boolean, sport: boolean) {
+        this.resetInteressen()
         if (lesen) {
-            this.addSchlagwort('Lesen')
+            this.addInteresse('Lesen')
         }
         if (reisen) {
-            this.addSchlagwort('Reisen')
+            this.addInteresse('Reisen')
+        }
+        if (sport) {
+            this.addInteresse('Sport')
         }
     }
 
     /**
-     * Konvertierung des Buchobjektes in ein JSON-Objekt f&uuml;r den RESTful
+     * Konvertierung des Kundeobjektes in ein JSON-Objekt f&uuml;r den RESTful
      * Web Service.
      // tslint:disable-next-line:max-line-length
      * @return {{_id: (string|any); nachname: (string|any); kategorie: (number|any); familienstand: (FamilienstandType|any); geschlecht: (GeschlechtType|any); datum: string; newsletter: (boolean|any); interessen: (Array<string>|any); email: (string|any); user: (string|any); adresse: (Adresse|any); homepage: (string|any); umsatz: (Umsatz|any)}} JSON-Objekt f&uuml;r den RESTful Web Service
@@ -350,15 +358,15 @@ export class Kunde {
         return JSON.stringify(this, null, 2)
     }
 
-    private resetSchlagwoerter() {
+    private resetInteressen() {
         this.interessen = []
     }
 
-    private addSchlagwort(interessen: string) {
+    private addInteresse(interessen: string) {
         if (this.interessen === undefined) {
             this.interessen = []
         }
-        const tmpSchlagwoerter = this.interessen as Array<string>
-        tmpSchlagwoerter.push(interessen)
+        const tmpInteressen = this.interessen as Array<string>
+        tmpInteressen.push(interessen)
     }
 }
