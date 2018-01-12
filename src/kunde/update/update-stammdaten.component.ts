@@ -57,7 +57,7 @@ export default class UpdateStammdatenComponent implements OnInit {
         console.log('kunde=', this.kunde)
 
         // Definition und Vorbelegung der Eingabedaten
-        this.name = new FormControl(this.kunde.name, Validators.compose([
+        this.nachname = new FormControl(this.kunde.nachname, Validators.compose([
             Validators.required, Validators.minLength(2),
             Validators.pattern(/^\w.*$/),
         ]))
@@ -68,7 +68,7 @@ export default class UpdateStammdatenComponent implements OnInit {
 
         this.form = this.formBuilder.group({
             // siehe formControlName innerhalb von @Component({template: ...})
-            name: this.name,
+            namenach: this.nachname,
             familienstand: this.familienstand,
             geschlecht: this.geschlecht,
             kategorie: this.kategorie,
@@ -96,7 +96,7 @@ export default class UpdateStammdatenComponent implements OnInit {
 
         // kategorie, kategorie und rabatt koennen im Formular nicht geaendert werden
         this.kunde.updateStammdaten(
-            this.name.value, this.familienstand.value, this.geschlecht.value,
+            this.nachname.value, this.familienstand.value, this.geschlecht.value,
             this.kunde.kategorie, this.kunde.newsletter, this.kunde.interessen,
             this.kunde.email, this.kunde.adresse, this.kunde.homepage,
             this.kunde.umsatz)
