@@ -112,4 +112,3 @@ export default class UpdateKundeComponent implements OnInit {
         this.kundeService.observeError(next)
     }
 }
-
