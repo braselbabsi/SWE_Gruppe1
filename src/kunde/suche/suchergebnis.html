@@ -55,7 +55,6 @@
                             <th>Adresse</th>
                             <th>Username</th>
                             <th></th>
-                            <th>Schlagw&ouml;rter</th>
                             <th>
                                 <span class="sr-only">
                                     Spalte f&uuml;r Details
@@ -87,13 +86,16 @@
                                 </span>
                             </td>
                             <td>
-                                <span *ngFor="let sw of b.schlagwoerter">
+                                <span *ngFor="let sw of b.interessen">
                                     <span [ngSwitch]="sw">
-                                        <span *ngSwitchCase="'GESCHAEFTSKUNDE'">
-                                            Geschäftskunde<br>
+                                        <span *ngSwitchCase="'SPORT'">
+                                            Sport<br>
                                         </span>
-                                        <span *ngSwitchCase="'PRIVATKUNDE'">
-                                            Privatkunde
+                                        <span *ngSwitchCase="'LESEN'">
+                                            Lesen
+                                        </span>
+                                        <span *ngSwitchCase="'REISEN'">
+                                            Reisen
                                         </span>
                                     </span>
                                 </span>
