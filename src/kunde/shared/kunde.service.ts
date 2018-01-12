@@ -96,7 +96,7 @@ export class KundeService {
     }
 
     @log
-    observeBuch(next: (kunde: Kunde) => void) {
+    observeKunde(next: (kunde: Kunde) => void) {
         return this.kundeEmitter.subscribe(next)
     }
 
@@ -106,7 +106,7 @@ export class KundeService {
     }
 
     /**
-     * Buecher suchen
+     * Kunden suchen
      * @param suchkriterien Die Suchkriterien
      */
     @log
@@ -211,7 +211,7 @@ export class KundeService {
                               err.error.message)
             } else {
                 if (errorFn !== undefined) {
-                    // z.B. {name: ..., geschlecht: ..., email: ...}
+                    // z.B. {nachname: ..., geschlecht: ..., email: ...}
                     errorFn(err.status, err.error)
                 } else {
                     console.error('errorFnPut', err)
@@ -405,8 +405,8 @@ export class KundeService {
     private suchkriterienToHttpParams(suchkriterien: KundeForm): HttpParams {
         let httpParams = new HttpParams()
 
-        if (suchkriterien.name !== undefined && suchkriterien.name !== '') {
-            httpParams = httpParams.set('name', suchkriterien.name as string)
+        if (suchkriterien.nachname !== undefined && suchkriterien.nachname !== '') {
+            httpParams = httpParams.set('nachname', suchkriterien.nachname as string)
         }
         if (suchkriterien.familienstand !== undefined) {
             const value = suchkriterien.familienstand as string
@@ -426,6 +426,9 @@ export class KundeService {
         }
         if (suchkriterien.reisen) {
             httpParams = httpParams.set('reisen', 'true')
+        }
+         if (suchkriterien.sport) {
+            httpParams = httpParams.set('sport', 'true')
         }
         return httpParams
     }
