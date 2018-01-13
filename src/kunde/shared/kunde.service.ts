@@ -427,7 +427,7 @@ export class KundeService {
         if (suchkriterien.reisen) {
             httpParams = httpParams.set('reisen', 'true')
         }
-         if (suchkriterien.sport) {
+        if (suchkriterien.sport) {
             httpParams = httpParams.set('sport', 'true')
         }
         return httpParams

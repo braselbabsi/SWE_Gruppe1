@@ -329,10 +329,13 @@ export class Kunde {
     /**
      * Konvertierung des Kundeobjektes in ein JSON-Objekt f&uuml;r den RESTful
      * Web Service.
-     // tslint:disable-next-line:max-line-length
-     * @return {{_id: (string|any); nachname: (string|any); kategorie: (number|any); familienstand: (FamilienstandType|any); geschlecht: (GeschlechtType|any); datum: string; newsletter: (boolean|any); interessen: (Array<string>|any); email: (string|any); user: (string|any); adresse: (Adresse|any); homepage: (string|any); umsatz: (Umsatz|any)}} JSON-Objekt f&uuml;r den RESTful Web Service
      */
-    toJSON(): KundeServer {
+     // tslint:disable-next-line:max-line-length
+    /** @return {{_id: (string|any); nachname: (string|any); kategorie: (number|any); familienstand: (FamilienstandType|any); geschlecht: (GeschlechtType|any); datum: string; newsletter: (boolean|any); interessen: (Array<string>|any); email: (string|any); user: (string|any); adresse: (Adresse|any); homepage: (string|any); umsatz: (Umsatz|any)}}
+     * JSON-Objekt f&uuml;r den RESTful Web Service
+     */
+
+     toJSON(): KundeServer {
         const geburtsdatum = this.geburtsdatum === undefined ?
             undefined :
             this.geburtsdatum.format('YYYY-MM-DD')

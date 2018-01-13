@@ -90,7 +90,7 @@ export default class UpdateInteressenComponent implements OnInit {
         }
 
         this.kunde.updateInteressen(
-            this.sport.value, this.reisen.value, this.lesen)
+            this.sport.value, this.reisen.value, this.lesen.value)
         console.log('kunde=', this.kunde)
 
         const successFn = () => {
