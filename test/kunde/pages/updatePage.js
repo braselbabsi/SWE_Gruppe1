@@ -20,7 +20,7 @@
 const updateNachname = function(nachnameStr) {
     const {expect, click, clearValue} = this
 
-    expect.element('@tabSchlagwoerter').to.be.visible
+    expect.element('@tabInteressen').to.be.visible
     expect.element('@tabStammdaten').to.be.visible
 
     expect.element('@nachname').to.be.visible
