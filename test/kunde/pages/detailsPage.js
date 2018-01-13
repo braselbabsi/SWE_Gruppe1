@@ -20,7 +20,7 @@
 const checkNachname = function(nachname) {
     const {expect} = this
 
-    expect.element('@tabSchlagwoerter').to.be.visible
+    expect.element('@tabInteressen').to.be.visible
     expect.element('@tabStammdaten').to.be.visible
 
     expect.element('@tabelle').to.be.visible
@@ -31,7 +31,7 @@ const checkNachname = function(nachname) {
 const clickUpdateButton = function() {
     const {expect, click} = this
 
-    expect.element('@tabSchlagwoerter').to.be.visible
+    expect.element('@tabInteressen').to.be.visible
     expect.element('@tabStammdaten').to.be.visible
 
     expect.element('@updateButton').to.be.visible
