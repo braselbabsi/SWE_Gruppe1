@@ -29,15 +29,15 @@ const MIN_RATING = 0
 const MAX_RATING = 5
 
 export enum GeschlechtType {
-    MAENNLICH = 'MAENNLICH',
-    WEIBLICH = 'WEIBLICH',
+    MAENNLICH,
+    WEIBLICH,
 }
 
 export enum FamilienstandType {
-    LEDIG = 'L',
-    VERHEIRATET = 'VH',
-    GESCHIEDEN = 'G',
-    VERWITWET = 'VW',
+    LEDIG,
+    VERHEIRATET,
+    GESCHIEDEN,
+    VERWITWET,
 }
 // export enum InteressenType {
 //    SPORT = 'S',
@@ -249,7 +249,7 @@ export class Kunde {
      * @param verlag der Name des Verlags
      * @return true, falls das Kunde dem GeschlechtType zugeordnet ist. Sonst false.
      */
-    hasGeschlecht(geschlecht: string) {
+    hasGeschlecht(geschlecht: GeschlechtType) {
         return this.geschlecht === geschlecht
     }
 
@@ -331,7 +331,7 @@ export class Kunde {
      * Web Service.
      */
      // tslint:disable-next-line:max-line-length
-    /** @return {{_id: (string|any); nachname: (string|any); kategorie: (number|any); familienstand: (FamilienstandType|any); geschlecht: (GeschlechtType|any); datum: string; newsletter: (boolean|any); interessen: (Array<string>|any); email: (string|any); user: (string|any); adresse: (Adresse|any); homepage: (string|any); umsatz: (Umsatz|any)}}
+    /** @return {_id: (string|any); nachname: (string|any); kategorie: (number|any); familienstand: (FamilienstandType|any); geschlecht: (GeschlechtType|any); geburtsdatum: (moment.Moment|any); newsletter: (boolean|any); interessen: (Array<string>|any); email: (string|any); user: (string|any); adresse: (Adresse|any); homepage: (string|any); umsatz: (Umsatz|any)}
      * JSON-Objekt f&uuml;r den RESTful Web Service
      */
 

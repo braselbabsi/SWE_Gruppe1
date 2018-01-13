@@ -409,7 +409,7 @@ export class KundeService {
             httpParams = httpParams.set('nachname', suchkriterien.nachname as string)
         }
         if (suchkriterien.familienstand !== undefined) {
-            const value = suchkriterien.familienstand as string
+            const value = suchkriterien.familienstand.toString()
             httpParams = httpParams.set('familienstand', value)
         }
         if (suchkriterien.kategorie !== undefined) {
@@ -418,7 +418,7 @@ export class KundeService {
         }
         if (suchkriterien.geschlecht !== undefined) {
            // suchkriterien.geschlecht.length !== 0)
-            const value = suchkriterien.geschlecht as string
+            const value = suchkriterien.geschlecht.toString()
             httpParams = httpParams.set('geschlecht', value)
         }
         if (suchkriterien.lesen) {
