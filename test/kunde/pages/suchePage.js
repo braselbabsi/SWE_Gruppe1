@@ -21,90 +21,86 @@ import * as _ from 'lodash'
 
 const checkInit = function() {
     const {expect} = this
-    expect.element('@nachname').to.be.visible
+    expect.element('@titel').to.be.visible
     return this
 }
 
-const nachname = function(nachnameStr) {
-    this.expect.element('@nachname').to.be.visible
-    return this.clearValue('@nachname').setValue('@nachname', nachnameStr)
+const titel = function(titelStr) {
+    this.expect.element('@titel').to.be.visible
+    return this.clearValue('@titel').setValue('@titel', titelStr)
 }
-const weiblich = function() {
+const druckausgabe = function() {
     const {expect} = this
-    expect.element('@geschlecht').to.be.visible
-    this.click('@geschlecht')
-    expect.element('@weiblich').to.be.visible
-    return this.click('@weiblich')
+    expect.element('@verlag').to.be.visible
+    this.click('@verlag')
+    expect.element('@druckausgabe').to.be.visible
+    return this.click('@druckausgabe')
 }
-const männlich = function() {
+const kindle = function() {
     const {expect} = this
-    expect.element('@geschlecht').to.be.visible
-    this.click('@geschlecht')
-    expect.element('@männlich').to.be.visible
-    return this.click('@männlich')
+    expect.element('@verlag').to.be.visible
+    this.click('@verlag')
+    expect.element('@kindle').to.be.visible
+    return this.click('@kindle')
 }
-const sport = function() {
-    this.expect.element('@sport').to.be.visible
-    return this.click('@sport')
+const javascript = function() {
+    this.expect.element('@javascript').to.be.visible
+    return this.click('@javascript')
 }
-const lesen = function() {
-    this.expect.element('@lesen').to.be.visible
-    return this.click('@lesen')
-}
-const reisen = function() {
-    this.expect.element('@reisen').to.be.visible
-    return this.click('@reisen')
+const typescript = function() {
+    this.expect.element('@typescript').to.be.visible
+    return this.click('@typescript')
 }
 const submit = function() {
     this.expect.element('@button').to.be.visible
     return this.click('@button')
 }
-const checkAlleKunden = function() {
-    this.expect.element('@gefundeneKundenHeader').to.be.visible
+const checkAlleBuecher = function() {
+    this.expect.element('@gefundeneBuecherHeader').to.be.visible
     return this
 }
 
-const checkGefundeneKunden = function(nachnameSubstr) {
-    this.expect.element('@gefundeneKundenHeader').to.be.visible
+const checkGefundeneBuecher = function(titelSubstr) {
+    this.expect.element('@gefundeneBuecherHeader').to.be.visible
 
     const {api} = this.client
 
-    // Nachname in der 1. Zeile ueberpruefen
-    const selectorNachnameZeile1 = 'hs-suchergebnis tbody tr:nth-child(1) ' +
+    // Titel in der 1. Zeile ueberpruefen
+    const selectorTitelZeile1 = 'hs-suchergebnis tbody tr:nth-child(1) ' +
                                 'td:nth-child(3)'
-    api.expect.element(selectorNachnameZeile1).text.to.contain(nachnameSubstr)
+    api.expect.element(selectorTitelZeile1).text.to.contain(titelSubstr)
 
-    // von allen "n"" Zeilen die Spalte "3" mit dem Nachname ermitteln:
+    // von allen "n"" Zeilen die Spalte "3" mit dem Titel ermitteln:
     // Formel fuer nth-child():   a*n + b
     const selectorSpalte = 'hs-suchergebnis table tbody tr:nth-child(n) ' +
                            'td:nth-child(3)'
 
-    // Callback zum Ueberpruefen des Nachnames in den Datenzellen der Spalte
-    const checkNachname = zellen => {
+    // Callback zum Ueberpruefen des Titels in den Datenzellen der Spalte
+    const checkTitel = zellen => {
         _.times(zellen.value.length, i => {
             /* eslint no-magic-numbers: 0, space-infix-ops: 0 */
             const selectorZelle = 'hs-suchergebnis tbody ' +
                                   `tr:nth-child(${i+1}) td:nth-child(3)`
-            api.expect.element(selectorZelle).text.to.contain(nachnameSubstr)
+            api.expect.element(selectorZelle).text.to.contain(titelSubstr)
         })
     }
 
-    api.elements('css selector', selectorSpalte, checkNachname)
+    api.elements('css selector', selectorSpalte, checkTitel)
 
     this.expect.element('@fehlermeldung').to.be.not.present
 
     return this
 }
 
-const clickNachnameErsteZeile = function() {
-    this.expect.element('@nachnameErsteZeile').to.be.visible
-    this.click('@nachnameErsteZeile')
+const clickTitelErsteZeile = function() {
+    this.expect.element('@titelErsteZeile').to.be.visible
+    this.click('@titelErsteZeile')
 }
 
 const checkFehlermeldung = function() {
     const {expect} = this
     expect.element('@fehlermeldung').to.be.visible
-    expect.element('@gefundeneKundenHeader').to.be.not.present
+    expect.element('@gefundeneBuecherHeader').to.be.not.present
     return this
 }
 
@@ -117,38 +113,35 @@ export default {
     url: 'https://localhost/suche',
 
     elements: {
-        nachname: {
+        titel: {
             selector: 'input[id=nachnameInput]',
         },
-        geschlecht: {
-            selector: 'select[name=geschlecht]',
+        verlag: {
+            selector: 'select[name=verlag]',
         },
-        weiblich: {
-            selector: 'input[value=WEIBLICH]',
+        druckausgabe: {
+            selector: 'input[value=DRUCKAUSGABE]',
         },
-        männlich: {
-            selector: 'input[value=MÄNNLICH]',
+        kindle: {
+            selector: 'input[value=KINDLE]',
         },
-        sport: {
-            selector: 'input[name=sport]',
+        javascript: {
+            selector: 'input[name=javascript]',
         },
-        lesen: {
-            selector: 'input[name=lesen]',
-        },
-        reisen: {
-            selector: 'input[name=reisen]',
+        typescript: {
+            selector: 'input[name=typescript]',
         },
         button: {
             selector: 'button i[class="fa fa-search"]',
         },
-        gefundeneKundenHeader: {
+        gefundeneBuecherHeader: {
             selector: 'div[class=card-header]',
         },
         fehlermeldung: {
             selector: 'div[class=text-danger] ' +
                       'i[class="fa fa-exclamation-circle"]',
         },
-        nachnameErsteZeile: {
+        titelErsteZeile: {
             selector: 'hs-suchergebnis ' +
                       'tbody tr:nth-child(1) td:nth-child(3)',
         },
@@ -161,17 +154,16 @@ export default {
     commands: [
         {
             checkInit,
-            nachname,
-            weiblich,
-            männlich,
-            sport,
-            lesen,
-            reisen,
+            titel,
+            druckausgabe,
+            kindle,
+            javascript,
+            typescript,
             submit,
-            checkAlleKunden,
-            checkGefundeneKunden,
+            checkAlleBuecher,
+            checkGefundeneBuecher,
             checkFehlermeldung,
-            clickNachnameErsteZeile,
+            clickTitelErsteZeile,
             deleteErsteZeile,
         },
     ],

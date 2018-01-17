@@ -43,11 +43,13 @@ export default class BasicAuthService {
      */
     @log
     async login(username: string, password: string) {
+        // console.log('#####' + username + ',' + password)
         const loginUri = `${BASE_URI}auth/rollen`
         console.log(`Login URI = ${loginUri}`)
 
         const base64 = window.btoa(`${username}:${password}`)
         const basicAuth = `Basic ${base64}`
+        console.log(`basicAuth = ${basicAuth}`)
 
         // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
         const headers = new Headers()
@@ -79,12 +81,13 @@ export default class BasicAuthService {
         const json = await response.json()
         console.log('json', json)
         // Array von Strings als 1 String
-        const roles: string = json.roles.join()
+        const roles: string =  json.join() // 'ROLE_ACTUATOR,ROLE_ADMIN,ROLE_KUNDE'
         console.log(`roles=${roles}`)
 
-        return this.cookieService.saveAuthorization(
+        this.cookieService.saveAuthorization(
             // Base64-String fuer 1 Tag speichern
-            basicAuth, roles, 24 * 60 * 60 * 1000)
+            basicAuth, roles, 59 * 365 * 24 * 60 * 60 * 1000)
+        return roles
     }
 
     toString() {

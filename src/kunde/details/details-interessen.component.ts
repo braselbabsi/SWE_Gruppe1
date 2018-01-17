@@ -25,14 +25,14 @@ import {log} from '../../shared'
 @Component({
     selector: 'hs-details-interessen',
     template: `
-        <div class="form-group row" *ngFor="let interesse of values">
-            <div class="col col-11">
+        <div class="form-group row" *ngFor="let interessen of values">
+            <div class="col col-11 offset-1">
                 <div class="checkbox">
-                    <label [ngSwitch]="interesse">
+                    <label [ngSwitch]="interessen">
                         <input type="checkbox" checked disabled class="checkbox">
-                        <span *ngSwitchCase="'SPORT'">Sport</span>
-                        <span *ngSwitchCase="'LESEN'">Lesen</span>
-                        <span *ngSwitchCase="'REISEN'">Reisen</span>
+                        <span *ngSwitchCase="'S'">Sport</span>
+                        <span *ngSwitchCase="'L'">Lesen</span>
+                        <span *ngSwitchCase="'R'">Reisen</span>
                     </label>
                 <div>
             </div>

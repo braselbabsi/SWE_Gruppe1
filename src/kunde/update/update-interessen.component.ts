@@ -36,9 +36,9 @@ export default class UpdateInteressenComponent implements OnInit {
     @Input() kunde: Kunde
 
     form: FormGroup
-    sport: FormControl
-    reisen: FormControl
-    lesen: FormControl
+    S: FormControl
+    L: FormControl
+    R: FormControl
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -49,7 +49,7 @@ export default class UpdateInteressenComponent implements OnInit {
 
     /**
      * Das Formular als Gruppe von Controls initialisieren und mit den
-     * Interessenn des zu &auml;ndernden Kunden vorbelegen.
+     * Interessen des zu &auml;ndernden Kunden vorbelegen.
      */
     @log
     ngOnInit() {
@@ -57,17 +57,17 @@ export default class UpdateInteressenComponent implements OnInit {
 
         // Definition und Vorbelegung der Eingabedaten (hier: Checkbox)
         const hasSport = this.kunde.hasInteresse('SPORT')
-        this.sport = new FormControl(hasSport)
-        const hasReisen = this.kunde.hasInteresse('REISEN')
-        this.reisen = new FormControl(hasReisen)
+        this.S = new FormControl(hasSport)
         const hasLesen = this.kunde.hasInteresse('LESEN')
-        this.lesen = new FormControl(hasLesen)
+        this.L = new FormControl(hasLesen)
+        const hasReisen = this.kunde.hasInteresse('REISEN')
+        this.R = new FormControl(hasReisen)
 
         this.form = this.formBuilder.group({
             // siehe ngFormControl innerhalb von @Component({template: `...`})
-            sport: this.sport,
-            reisen: this.reisen,
-            lesen: this.lesen,
+            S: this.S,
+            L: this.L,
+            R: this.R,
         })
     }
 
@@ -85,12 +85,12 @@ export default class UpdateInteressenComponent implements OnInit {
         }
 
         if (this.kunde === undefined) {
-            console.error('kunde === undefined')
+            console.error('kunde === undefined/null')
             return
         }
 
         this.kunde.updateInteressen(
-            this.sport.value, this.reisen.value, this.lesen.value)
+            this.S.value, this.L.value, this.R.value)
         console.log('kunde=', this.kunde)
 
         const successFn = () => {

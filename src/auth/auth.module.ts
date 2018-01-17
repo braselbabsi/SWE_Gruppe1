@@ -23,7 +23,6 @@ import {AuthInterceptor} from './auth.interceptor'
 import {AuthService} from './auth.service'
 import BasicAuthService from './basic-auth.service'
 import CookieService from './cookie.service'
-import JwtService from './jwt.service'
 
 @NgModule({})
 export default class AuthModule {
@@ -33,7 +32,6 @@ export default class AuthModule {
             ngModule: AuthModule,
             providers: [
                 AdminGuard, AuthService, BasicAuthService, CookieService,
-                JwtService,
                 [
                     {
                         provide: HTTP_INTERCEPTORS,

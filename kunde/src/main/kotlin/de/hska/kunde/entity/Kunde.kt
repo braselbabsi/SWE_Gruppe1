@@ -43,7 +43,7 @@ import org.springframework.data.mongodb.core.mapping.Document
  */
 @Document
 @JsonPropertyOrder(
-        "name", "email", "kategorie", "newsletter", "geburtsdatum",
+        "nachname", "email", "kategorie", "newsletter", "geburtsdatum",
         "umsatz", "homepage", "geschlecht", "familienstand", "interessen",
         "adresse", "user")
 internal data class Kunde (
@@ -51,10 +51,10 @@ internal data class Kunde (
     @JsonIgnore
     val id: String?,
 
-    @get:NotEmpty(message = "{kunde.name.notEmpty}")
+    @get:NotEmpty(message = "{kunde.nachname.notEmpty}")
     @get:Pattern(
         regexp = NACHNAME_PATTERN,
-        message = "{kunde.name.pattern}")
+        message = "{kunde.nachname.pattern}")
     @Indexed
     val nachname: String,
 
@@ -120,7 +120,7 @@ internal data class Kunde (
 
     override fun hashCode() = email.hashCode()
     override fun toString() =
-        "Kunde(id=$id, name=$nachname, email=$email, " +
+        "Kunde(id=$id, nachname=$nachname, email=$email, " +
         "kategorie=$kategorie, newsletter=$newsletter, " +
         "geburtsdatum=$geburtsdatum, umsatz=$umsatz, homepage=$homepage, " +
         "geschlecht=$geschlecht, familienstand=$familienstand, " +

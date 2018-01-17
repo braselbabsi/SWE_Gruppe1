@@ -24,7 +24,7 @@ import {fadeIn, log} from '../shared'
     selector: 'hs-home',
     template: `
         <!-- to fade in = einblenden -->
-        <h1 class="display-1" [@fadeIn]="'in'">Hallo!</h1>
+        <h1 class="display-1" [@fadeIn]="'in'">Guten Tag!</h1>
     `,
     animations: [fadeIn],
 })

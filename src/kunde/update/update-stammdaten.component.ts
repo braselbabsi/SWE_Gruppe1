@@ -39,7 +39,8 @@ export default class UpdateStammdatenComponent implements OnInit {
     nachname: FormControl
     familienstand: FormControl
     geschlecht: FormControl
-    kategorie: FormControl
+    betrag: FormControl
+    waehrung: FormControl
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -63,20 +64,21 @@ export default class UpdateStammdatenComponent implements OnInit {
         ]))
         this.familienstand = new FormControl(this.kunde.familienstand, Validators.required)
         this.geschlecht = new FormControl(this.kunde.geschlecht)
-        this.kategorie = new FormControl(this.kunde.kategorie)
-        // this.geburtsdatum = new Control(this.kunde.geburtsdatum.toISOString())
+        this.betrag = new FormControl(this.kunde.umsatz.betrag)
+        this.waehrung = new FormControl(this.kunde.umsatz.waehrung)
+
         this.form = this.formBuilder.group({
             // siehe formControlName innerhalb von @Component({template: ...})
             nachname: this.nachname,
-            familienstand: this.familienstand,
             geschlecht: this.geschlecht,
-            kategorie: this.kategorie,
-            // geburtsdatum: this.geburtsdatum
+            familienstand: this.familienstand,
+            betrag: this.betrag,
+            waehrung: this.waehrung,
         })
     }
 
     /**
-     * Die aktuellen Stammdaten f&uuml;r das angezeigte Kunde-Objekt
+     * Die aktuellen Stammdaten f&uuml;r das angezeigte Kunden-Objekt
      * zur&uuml;ckschreiben.
      * @return false, um das durch den Button-Klick ausgel&ouml;ste Ereignis
      *         zu konsumieren.
@@ -89,17 +91,15 @@ export default class UpdateStammdatenComponent implements OnInit {
         }
 
         if (this.kunde === undefined) {
-            console.error('kunde === undefined')
+            console.error('kunde === undefined/null')
             return
         }
 
-        // kategorie, kategorie und rabatt koennen im Formular nicht geaendert werden
+        // rating, preis und rabatt koennen im Formular nicht geaendert werden
         this.kunde.updateStammdaten(
-            this.nachname.value, this.geschlecht.value, this.familienstand.value, this.kategorie.value,
-            this.kunde.newsletter, this.kunde.email, this.kunde.geburtsdatum,
-            this.kunde.user, this.kunde.adresse, this.kunde.homepage,
-            this.kunde.umsatz)
-        console.log('kunde=', this.kunde)
+            this.nachname.value, this.familienstand.value, this.geschlecht.value,
+            this.betrag.value, this.waehrung.value)
+        console.log('Kunde Stammdaten neu=', this.kunde)
 
         const successFn = () => {
             console.log(`UpdateStammdaten: successFn: path: ${HOME_PATH}`)
@@ -111,7 +111,6 @@ export default class UpdateStammdatenComponent implements OnInit {
             console.error(`UpdateStammdatenComponent.onUpdate(): errFn(): status: ${status}`)
             console.error('UpdateStammdatenComponent.onUpdate(): errFn(): errors', errors)
         }
-
         this.kundeService.update(this.kunde, successFn, errFn)
 
         // damit das (Submit-) Ereignis konsumiert wird und nicht an

@@ -26,6 +26,10 @@ import {easeIn, easeOut, isString, log} from '../../shared'
 import {Kunde} from '../shared'
 import {KundeService} from '../shared/kunde.service'
 
+// https://angular.io/docs/ts/latest/guide/animations.html
+// auf der Basis von des "Web Animations API"
+// alternativ gibt es noch: CSS Transitions und CSS Keyframes
+
 /**
  * Komponente f&uuml;r das Tag <code>hs-suchergebnis</code>, um zun&auml;chst
  * das Warten und danach das Ergebnis der Suche anzuzeigen, d.h. die gefundenen
@@ -71,7 +75,7 @@ export default class SuchergebnisComponent implements OnInit {
 
     /**
      * Das ausgew&auml;hlte bzw. angeklickte Kunde in der Detailsseite anzeigen.
-     * @param kunde Das ausgew&auml;hlte Kunde
+     * @param kunde Der ausgew&auml;hlte Kunde
      */
     @log
     onSelect(kunde: Kunde) {
@@ -82,16 +86,18 @@ export default class SuchergebnisComponent implements OnInit {
 
     /**
      * Das ausgew&auml;hlte bzw. angeklickte Kunde l&ouml;schen.
-     * @param kunde Das ausgew&auml;hlte Kunde
+     * @param kunde Der ausgew&auml;hlte Kunde
      */
     @log
     onRemove(kunde: Kunde) {
         const successFn: () => void | undefined = undefined as any
-        const errorFn: (status: number) => void =
-            status => console.error(`Fehler beim Loeschen: status=${status}`)
+        const errorFn: (status: number) => void = status => {
+            console.error(`Fehler beim Loeschen: status=${status}`)
+        }
         this.kundeService.remove(kunde, successFn, errorFn)
-        if (this.kunden.length !== 0) {
-            this.kunden = this.kunden.filter((b: Kunde) => b._id !== kunde._id)
+        if (this.kunden !== null) {
+            const tmp = this.kunden as Array<Kunde>
+            this.kunden = tmp.filter((b: Kunde) => b._id !== kunde._id)
         }
     }
 
@@ -134,7 +140,7 @@ export default class SuchergebnisComponent implements OnInit {
             this.kunden = []
 
             console.log('SuchErgebnisComponent.observeError: err=', err)
-            if (err === undefined) {
+            if (err === null) {
                 this.errorMsg = 'Ein Fehler ist aufgetreten.'
                 return
             }

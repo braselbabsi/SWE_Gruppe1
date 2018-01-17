@@ -30,6 +30,7 @@ import org.springframework.http.HttpMethod.GET
 import org.springframework.http.HttpMethod.PATCH
 import org.springframework.http.HttpMethod.POST
 import org.springframework.http.HttpMethod.PUT
+import org.springframework.http.HttpMethod.OPTIONS
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.config.annotation.web.reactive
         .EnableWebFluxSecurity
@@ -53,12 +54,13 @@ internal class SecurityConfig {
                     .hasRole(KUNDE)
             .pathMatchers(PATCH, KUNDE_ID_PATH).hasRole(ADMIN)
             .pathMatchers(DELETE, KUNDE_ID_PATH).hasRole(ADMIN)
-            .pathMatchers(AUTH_PATH).permitAll()
+			.pathMatchers(AUTH_PATH).permitAll()
+
             .pathMatchers(GET, ACTUATOR_PATH, "$ACTUATOR_PATH/*")
                     .hasRole(ACTUATOR)
             .pathMatchers(POST, "$ACTUATOR_PATH/*")
                     .hasRole(ACTUATOR)
-                .pathMatchers(OPTIONS).permitAll()
+			.pathMatchers(OPTIONS).permitAll()
 
             .and()
             .httpBasic()
@@ -91,8 +93,8 @@ internal class SecurityConfig {
         val KUNDE_PATH = "/"
         val KUNDE_ID_PATH = "/*"
         val MULTIMEDIA_ID_PATH = "/multimedia/*"
+		val AUTH_PATH = "/auth/rollen"
         val ACTUATOR_PATH = "/application"
-        val AUTH_PATH = "/auth/rollen"
 
         val LOGGER = getLogger()
 

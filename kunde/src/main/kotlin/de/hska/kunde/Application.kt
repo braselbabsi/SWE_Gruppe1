@@ -58,7 +58,7 @@ internal class Application {
             DELETE("/", handler::deleteByEmail)
 
             // Fuer "Software Engineering" und Android
-            GET("/name/{$PREFIX_PATH_VAR}",
+            GET("/nachname/{$PREFIX_PATH_VAR}",
                     valuesHandler::findNachnamenByPrefix)
             GET("/email/{$PREFIX_PATH_VAR}",
                     valuesHandler::findEmailsByPrefix)
@@ -92,7 +92,7 @@ internal class Application {
         val ID_PATH_VAR = "id"
         private val ID_PATH_PATTERN = "{$ID_PATH_VAR:${Kunde.ID_PATTERN}}"
 
-        val PREFIX_PATH_VAR = "name"
+        val PREFIX_PATH_VAR = "nachname"
         private val LOGGER = getLogger()
     }
 }

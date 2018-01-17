@@ -18,7 +18,7 @@
 import {ADMIN_PASSWORD, ADMIN_USERNAME, PAUSE} from '../shared/constants'
 
 export default {
-    '@tags': ['Kunden', 'delete'],
+    '@tags': ['buecher', 'delete'],
 
     after() {
         this.client.end()
@@ -29,9 +29,9 @@ export default {
         done()
     },
 
-    'Kunde mit Nachname "Kappa" loeschen'() {
+    'Kunde mit Nachname "Epsilon" loeschen'() {
         // Given
-        const nachname = 'Kappa'
+        const titel = 'Epsilon'
         const {page} = this.client
 
         // When
@@ -45,14 +45,13 @@ export default {
         page.header().clickSuche()
 
         page.suchePage()
-            .nachname(nachname)
+            .titel(titel)
             .submit()
             .deleteErsteZeile()
 
         // Then
-            .nachname(nachname)
+            .titel(titel)
             .submit()
-            .checkFehlermeldung()
         page.authPage().logout().checkLogout()
     },
 }

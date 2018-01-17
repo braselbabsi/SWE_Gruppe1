@@ -21,10 +21,9 @@ import {log} from '../shared'
 
 import BasicAuthService from './basic-auth.service'
 import CookieService from './cookie.service'
-
 // import JwtService from './jwt.service'
 
-export const ROLLE_ADMIN = 'admin'
+export const ROLLE_ADMIN = 'ROLE_ADMIN'
 
 @Injectable()
 export class AuthService {
@@ -34,8 +33,8 @@ export class AuthService {
         new EventEmitter<Array<string>>()
 
     constructor(
-        //  @Inject(JwtService) private readonly jwtService: JwtService,
         @Inject(BasicAuthService) private readonly basicAuthService: BasicAuthService,
+        // @Inject(JwtService) private readonly jwtService: JwtService,
         @Inject(CookieService) private readonly cookieService: CookieService) {
         console.log('AuthService.constructor()')
     }
@@ -47,19 +46,24 @@ export class AuthService {
      */
     @log
     async login(username: string, password: string) {
-      //  let rollen: Array<string>|undefined
+        let rollen: Array<string>|any
         try {
-            this.basicAuthService.login(username, password)
-            // rollen = await this.jwtService.login(username, password)
-            // Optional catch binding parameters
+            // this.basicAuthService.login(username, password)
+            rollen = await this.basicAuthService.login(username, password)
+            // rollen = ['admin', 'mitarbeiter', 'abteilungsleiter', 'kunde']
+            // rollen = ['ROLE_ACTUATOR', 'ROLE_ADMIN', 'ROLE_KUNDE']
+            // rollen = this.cookieService.getRoles()
+            // console.log('######' + rollen)
+        // Optional catch binding parameters
         } catch {
             this.isLoggedInEmitter.emit(false)
             this.rollenEmitter.emit([])
             return
         }
 
+        console.log('AuthService.login(): BASIC-Auth ist ok:', rollen)
         this.isLoggedInEmitter.emit(true)
-       // this.rollenEmitter.emit(rollen)
+        this.rollenEmitter.emit(rollen)
     }
 
     /**
@@ -116,6 +120,7 @@ export class AuthService {
 
         // z.B. ['admin', 'mitarbeiter']
         const rolesArray = rolesStr.split(',')
+        console.log('rolesArray:', rolesArray)
         return rolesArray !== undefined && rolesArray.includes(ROLLE_ADMIN)
     }
 

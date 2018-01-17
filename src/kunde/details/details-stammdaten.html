@@ -19,85 +19,48 @@
     <tbody>
         <tr>
             <td><label>Nachname</label></td>
-            <td>{{ kunde.nachname }}</td>
+            <td>{{kunde.nachname}}</td>
         </tr>
-        <!-- Adresse oder einzeln plz und ort? -->
         <tr>
-            <td><label>Adresse</label></td>
-            <td>{{ kunde.adresse }}</td>
-        </tr>
-        
-        <tr>
-            <td><label>Kategorie</label></td>
-            <td>
-                <span *ngFor="let r of kunde.kategorieArray">
-                    <i class="fa fa-star" style="color: rgb(72, 255, 0);"
-                        *ngIf="r === true"></i>
-                </span>
-            </td>
-        </tr>
-    
-        <tr>
-            <td><label>Geschlecht</label></td>
-            <td>
-                <span [ngSwitch]="kunde.geschlecht">
-                    <span *ngSwitchCase="'WEIBLICH'">Weiblich</span>
-                    <span *ngSwitchCase="'MÄNNLICH'">Männlich</span>
-                    <span *ngSwitchDefault>unbekannt</span>
-                </span>
-            </td>
+            <td><label>Umsatz</label></td>
+            <td>{{kunde.umsatz.betrag}}{{kunde.umsatz.waehrung}}</td>
         </tr>
         <tr>
             <td><label>Familienstand</label></td>
             <td>
                 <span [ngSwitch]="kunde.familienstand">
-                    <span *ngSwitchCase="'LEDIG'">Familienstand Ledig</span>
-                    <span *ngSwitchCase="'VERHEIRATET'">Familienstand Verheiratet</span>
-                    <span *ngSwitchCase="'GESCHIEDEN'">Familienstand Geschieden</span>
-                    <span *ngSwitchCase="'VERWITWET'">Familienstand Verwitwet</span>                    
+                    <span *ngSwitchCase="'L'">Ledig</span>
+                    <span *ngSwitchCase="'VH'">Verheiratet</span>
+                    <span *ngSwitchCase="'G'">Getrennt</span>
+                    <span *ngSwitchCase="'VW'">Verwitwet</span>
                     <span *ngSwitchDefault>unbekannt</span>
                 </span>
             </td>
         </tr>
         <tr>
-            <td><label>Geburtsdatum</label></td>
+            <td><label>Geschlecht</label></td>
             <td>
-            <!-- Geburtsdatum einfügen? -->
-                {{ kunde.datumFormatted }}<br/>
-                {{ kunde.datumFromNow }}
+                <span [ngSwitch]="kunde.geschlecht">
+                    <span *ngSwitchCase="'M'">Maennlich</span>
+                    <span *ngSwitchCase="'W'">Weiblich</span>
+                    <span *ngSwitchDefault>unbekannt</span>
+                </span>
             </td>
         </tr>
-        <!--
         <tr>
-            <td><label>Preis</label></td>
-            <!-- TODO 2 Nachkommastellen. Pipe "| number: '.2'" 
-            <td>{{ kunde.preis | currency: 'EUR': 'symbol' }}</td>
+            <td><label>Account</label></td>
+            <!-- TODO 2 Nachkommastellen. Pipe "| number: '.2'" -->
+            <td>{{kunde.username}}</td>
         </tr>
-        <tr>
-            <td><label>Rabatt</label></td>
-            <!-- {minIntegerDigits}.{minFractionDigits}-{maxFractionDigits} -->
-            <!-- default: 1.0-3 -->
-            <!-- siehe number_pipe.ts 
-            <td>{{ kunde.rabatt | percent: '.2' }}</td>
-        </tr>
-    -->
         <tr>
             <td><label>Email</label></td>
-            <td>{{ kunde.email }}</td>
-        </tr>
-        <tr>
-            <td><label>Homepage</label></td>
-            <td>{{ kunde.homepage }}</td>
-        </tr>
-        <tr>
-            <td><label>Umsatz</label></td>
-            <td>{{ kunde.umsatz }}</td>
+            <td>{{kunde.email}}</td>
         </tr>
         <tr>
             <td><label>Newsletter?</label></td>
             <td>
                 <div class="checkbox">
-                    <input type="checkbox" checked="{{ kunde.newsletter }}" disabled
+                    <input type="checkbox" checked="{{kunde.newsletter}}" disabled
                         class="checkbox">
                 </div>
             </td>

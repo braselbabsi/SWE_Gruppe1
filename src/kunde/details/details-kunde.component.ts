@@ -34,8 +34,8 @@ import {KundeService} from '../shared/kunde.service'
 })
 export default class DetailsKundeComponent implements OnInit {
     waiting = false
-    kunde: Kunde|undefined
-    errorMsg: string|undefined
+    kunde: Kunde|null = null
+    errorMsg: string|null = null
     isAdmin: boolean
 
     constructor(
@@ -51,11 +51,12 @@ export default class DetailsKundeComponent implements OnInit {
         this.observeKunde()
         this.observeError()
 
-        // Pfad-Parameter aus /detailsKunde/:id
+        // Pfad-Parameter aus /details/:id
         // Mongo-ID ist ein String
         const next: (params: Params) => void = params => {
             console.log('params=', params)
             this.kundeService.findById(params.id)
+            console.error(`details-kunde id ? ${params.id}`)
         }
         // ActivatedRoute.params ist ein Observable
         this.route.params.subscribe(next)
@@ -75,9 +76,9 @@ export default class DetailsKundeComponent implements OnInit {
             this.kunde = kunde
             console.log('DetailsKundeComponent.kunde=', this.kunde)
 
-            const nachname =
+            const titel =
                 this.kunde === undefined ? 'Details' : `Details ${this.kunde._id}`
-            this.titleService.setTitle(nachname)
+            this.titleService.setTitle(titel)
         }
         this.kundeService.observeKunde(next)
     }

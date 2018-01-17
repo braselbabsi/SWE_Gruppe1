@@ -44,4 +44,4 @@ internal class AppConfig :
     MongoMappingEventsListener,
     PasswordEncoder,
     WebServerReactiveConfig,
-        CorsConfig
+	CorsConfig

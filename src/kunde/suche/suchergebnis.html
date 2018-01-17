@@ -29,120 +29,121 @@
     </div>
 
     <ng-template #gefundeneKunden>
-        <div class="card mt-2" *ngIf="kunden.length !== 0; else fehlermeldung">
-            <div class="card-header">
-                <i class="fa fa-folder-open-o"></i>
-                <span class="ml-1 font-weight-bold">Gefundene Kunden</span>
-            </div>
-            <div class="card-body">
-                <table class="table table-striped table-hover table-responsive"
-                        [@easeIn]="'in'">
-                    <thead class="thead-default">
-                        <tr>
-                            <th>Nr.</th>
-                            <th>ID</th>
-                            <th>Nachname</th>
-                            <th>Geschlecht</th>
-                            <th>Familienstand</th>
-                            <th>Kategorie</th>
-                            <th>Datum</th>
-                            <th>Newsletter</th>
-                            <th>Email</th>
-                            <th>Geburtsdatum</th>
-                            <th>Umsatz</th>
-                            <th>Homepage</th>
-                            <th>Interessen</th>
-                            <th>Adresse</th>
-                            <th>Username</th>
-                            <th></th>
-                            <th>
-                                <span class="sr-only">
-                                    Spalte f&uuml;r Details
-                                </span>
-                            </th>
-                            <th *ngIf="isAdmin">
-                                <span class="sr-only">
-                                    Spalte f&uuml;r Entfernen
-                                </span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Template Binding: ngFor -->
-                        <!-- Event-Binding: statt (click) auch on-click -->
-                        <!-- Animation flyInOut siehe unten -->
-                        <tr *ngFor="let b of kunden; index as i"
-                            (click)="onSelect(b)" [@easeOut]="'in'">
-                            <td>{{ i + 1 }}</td>
-                            <td>{{ b._id }}</td>
-                            <td>{{ b.nachname }}</td>
-                            <td>
-                                <span [ngSwitch]="b.geschlecht">
-                                    <span *ngSwitchCase="'MAENNLICH'">m&aumlnnlich</span>
-                                    <span *ngSwitchCase="'WEIBLICH'">
-                                        weiblich
-                                    </span>
-                                    <span *ngSwitchDefault>unbekannt</span>
-                                </span>
-                            </td>
-                            <td>
-                                <span *ngFor="let sw of b.interessen">
-                                    <span [ngSwitch]="sw">
-                                        <span *ngSwitchCase="'SPORT'">
-                                            Sport<br>
-                                        </span>
-                                        <span *ngSwitchCase="'LESEN'">
-                                            Lesen
-                                        </span>
-                                        <span *ngSwitchCase="'REISEN'">
-                                            Reisen
-                                        </span>
-                                    </span>
-                                </span>
-                            </td>
-                            <td>
-                                <!-- Pfad detailsKunde/:id, in routes.ts -->
-                                <!-- modaler Dialog als Alternative: -->
-                                <!-- https://getbootstrap.com/docs/4.0/components/modal -->
-                                <a [routerLink]="['/details', b._id]"
-                                    data-toggle="tooltip" title="Details anzeigen">
-                                    <i class="fa fa-search-plus"></i>
-                                </a>
-                            </td>
-                            <td *ngIf="isAdmin">
-                                <a (click)="onRemove(b)" data-toggle="tooltip"
-                                    title="Entfernen">
-                                    <i class="fa fa-remove"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer">
-                <div [ngPlural]="kunden.length">
-                    <!-- zu vergleichender Ausdruck -->
-                    <ng-template ngPluralCase="=0">
-                        <i class="fa fa-info-circle"></i> Es gibt kein Kunde
-                    </ng-template>
-                    <ng-template ngPluralCase="=1">
-                        <i class="fa fa-info-circle"></i> Es gibt ein Kunde
-                    </ng-template>
-                    <ng-template ngPluralCase="other">
-                        <i class="fa fa-info-circle"></i>
-                        Es gibt {{ kunden.length }} Kunden
-                    </ng-template>
-                </div>
-
-                <i class="fa fa-info-circle"></i>
-                Zur Anzeige der JSON-Datens&auml;tze in suchergebnis.html
-                am Dateiende den Kommentar beim Tag &lt;pre&gt; entfernen
-            </div>
+    <div class="card mt-2" *ngIf="kunden.length !== 0; else fehlermeldung">
+        <div class="card-header">
+            <i class="fa fa-folder-open-o"></i>
+            <span class="ml-1 font-weight-bold">Gefundene Kunden</span>
         </div>
+        <div class="card-block">
+            <table class="table table-striped table-hover table-responsive"
+                    [@easeIn]="'in'">
+                <thead class="thead-default">
+                    <tr>
+                        <th>Nr.</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Geschlecht</th>
+                        <th>Familienstand</th>
+                        <th>Interessen</th>
+                        <th>
+                            <span class="sr-only">
+                                Spalte f&uuml;r Details
+                            </span>
+                        </th>
+                        <th *ngIf="isAdmin">
+                            <span class="sr-only">
+                                Spalte f&uuml;r Entfernen
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <!-- Template Binding: ngFor -->
+                <!-- Event-Binding: statt (click) auch on-click -->
+                <!-- Animation flyInOut siehe unten -->
+                <tr *ngFor="let k of kunden; index as i"
+                    (click)="onSelect(k)" [@easeOut]="'in'">
+                    <td>{{i + 1}}</td>
+                    <td>{{k._id}}</td>
+                    <td>{{k.nachname}}</td>
+                    <td>
+                        <span [ngSwitch]="k.geschlecht">
+                        <span *ngSwitchCase="'M'">Männlich</span>
+                        <span *ngSwitchCase="'W'">Weiblich</span>
+                        <span *ngSwitchDefault>unbekannt</span>
+                        </span>
+                    </td>
+                    <td>
+                        <span [ngSwitch]="k.familienstand">
+                            <span *ngSwitchCase="'L'">Ledig</span>
+                            <span *ngSwitchCase="'VH'">
+                                Verheiratet
+                            </span>
+                            <span *ngSwitchCase="'G'">
+                                Geschieden</span>
+                            <span *ngSwitchCase="'VW'">
+                                Verwittwet</span>
+                            <span *ngSwitchDefault>unbekannt</span>
+                        </span>
+                    </td>
+                    <td>
+                        <span *ngFor="let sw of k.interessen">
+                            <span [ngSwitch]="sw">
+                                <span *ngSwitchCase="'S'">
+                                    Sport<br>
+                                </span>
+                                <span *ngSwitchCase="'L'">
+                                    Lesen<br>
+                                </span>
+                                <span *ngSwitchCase="'R'">
+                                    Reisen
+                                </span>
+                            </span>
+                        </span>
+                    </td>
+                    <td>
+                        <!-- Pfad detailsKunde/:id, in root.router.ts -->
+                        <!-- modaler Dialog als Alternative: -->
+                        <!-- http://v4-alpha.getbootstrap.com/components/modal -->
+                        <a [routerLink]="['/details', k._id]"
+                           data-toggle="tooltip" title="Details anzeigen">
+                            <i class="fa fa-search-plus"></i>
+                        </a>
+                    </td>
+                    <td> <!-- *ngIf="isAdmin"> -->
+                        <a (click)="onRemove(k)" data-toggle="tooltip"
+                           title="Entfernen">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div [ngPlural]="kunden.length">
+                <!-- zu vergleichender Ausdruck -->
+                <ng-template ngPluralCase="=0">
+                    <i class="fa fa-info-circle"></i> Es gibt keinen Kunden
+                </ng-template>
+                <ng-template ngPluralCase="=1">
+                    <i class="fa fa-info-circle"></i> Es gibt einen Kunden
+                </ng-template>
+                <ng-template ngPluralCase="other">
+                    <i class="fa fa-info-circle"></i>
+                    Es gibt {{kunden.length}} Kunden
+                </ng-template>
+            </div>
 
-        <!-- Ausgabe des JSON-Datensatzes im Webbrowser statt console.log(...) -->
-        <!--
-        <prkundencher | json}}</pre>
-        -->
-    </ng-template>
+            <i class="fa fa-info-circle"></i>
+            Zur Anzeige der JSON-Datens&auml;tze in gefundene-kunden.component.html
+            am Dateiende den Kommentar beim Tag &lt;pre&gt; entfernen
+        </div>
+    </div>
+</ng-template>  
+
+    <!-- Ausgabe des JSON-Datensatzes im Webbrowser statt console.log(...) -->
+    <!--
+    <pre>{{buecher | json}}</pre>
+    -->
 </ng-template>

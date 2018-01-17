@@ -25,7 +25,8 @@ const clickSuche = function() {
 export default {
     elements: {
         suche: {
-            selector: 'hs-nav a[class="nav-link"] i[class="fa fa-search"]',
+            selector: 'hs-nav a[class="nav-link"] ' +
+            'i[class="fa fa-search"]',
         },
     },
 

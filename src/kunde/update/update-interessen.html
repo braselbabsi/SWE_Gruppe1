@@ -16,30 +16,30 @@
 -->
 <form [formGroup]="form" role="form">
     <div class="form-group row">
-        <div class="col">
+        <div class="col col-10 offset-2">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" formControlName="sport">
+                    <input type="checkbox" formControlName="S">
                     Sport
                 </label>
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" formControlName="reisen">
-                    Reisen
+                    <input type="checkbox" formControlName="L">
+                    Lesen
                 </label>
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" formControlName="lesen">
-                    Lesen
+                    <input type="checkbox" formControlName="R">
+                    Reisen
                 </label>
             </div>
         </div>
     </div>
 
     <div class="form-group row">
-        <div class="col">
+        <div class="col col-10 offset-2">
             <button class="btn btn-primary" (click)="onUpdate()"
                     [disabled]="form.pristine || !form.valid">
                 <i class="fa fa-check"></i>

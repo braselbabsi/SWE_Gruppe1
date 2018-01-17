@@ -28,7 +28,7 @@ import {KundeService} from '../shared/kunde.service'
  * f&uuml;r die folgenden Tags:
  * <ul>
  *  <li> <code>hs-stammdaten</code>
- *  <li> <code>hs-interessen</code>
+ *  <li> <code>hs-schlagwoerter</code>
  * </ul>
  */
 @Component({
@@ -36,8 +36,8 @@ import {KundeService} from '../shared/kunde.service'
     templateUrl: './update-kunde.html',
 })
 export default class UpdateKundeComponent implements OnInit {
-    kunde: Kunde|undefined
-    errorMsg: string|undefined
+    kunde: Kunde|null = null
+    errorMsg: string|null = null
 
     constructor(
         private readonly kundeService: KundeService,
@@ -53,7 +53,7 @@ export default class UpdateKundeComponent implements OnInit {
         this.observeKunde()
         this.observeError()
 
-        // Pfad-Parameter aus /update/:id
+        // Pfad-Parameter aus /updateKunde/:id
         const next: (params: Params) => void = params => {
             console.log('params=', params)
             this.kundeService.findById(params.id)
@@ -73,7 +73,7 @@ export default class UpdateKundeComponent implements OnInit {
      */
     private observeKunde() {
         const next: (kunde: Kunde) => void = kunde => {
-            this.errorMsg = undefined
+            this.errorMsg = null
             this.kunde = kunde
             console.log('UpdateKunde.kunde=', this.kunde)
         }
@@ -86,9 +86,9 @@ export default class UpdateKundeComponent implements OnInit {
      */
     private observeError() {
         const next: (err: string|number) => void = err => {
-            this.kunde = undefined
+            this.kunde = null
 
-            if (err === undefined) {
+            if (err === null) {
                 this.errorMsg = 'Ein Fehler ist aufgetreten.'
                 return
             }

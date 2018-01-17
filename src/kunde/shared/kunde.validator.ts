@@ -17,19 +17,24 @@
 
 import {AbstractControl} from '@angular/forms'
 
+/**
+ * Beispiel f&uuml;r eine Klasse mit eigenen Validierungsfunktionen.
+ * Die Validierungsfunktionen sind f&uuml;r Formulare, in denen Daten erfasst
+ * oder ge&auml;ndert werden.
+ */
 export const emailValidator: (control: AbstractControl) => {[key: string]: true}|null =
-    (control: AbstractControl) => {
-        const {value} = control
-        if (value === undefined || value === null || value === '') {
-            return null
-        }
+(control: AbstractControl) => {
+    const {value} = control
+    if (value === undefined || value === null || value === '') {
+        return null
+    }
 
         // http://tools.ietf.org/html/rfc22
         // http://www.w3.org/TR/html5/forms.html#valid-e-mail-address
         // tslint:disable:max-line-length
-        const invalid =
-            value.match(
-                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/)
-            === null
-        return invalid ? {invalidEmail: true} : null
+    const invalid =
+        value.match(
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/)
+        === null
+    return invalid ? {invalidEmail: true} : null
     }

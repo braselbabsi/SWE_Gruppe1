@@ -28,7 +28,7 @@ import {Kunde} from '../shared'
     templateUrl: './details-stammdaten.html',
 })
 export default class DetailsStammdatenComponent implements OnInit {
-    // Property Binding: <hs-details-stammdaten [kunde]="...">
+    // Property Binding: <hs-details-stammdaten [buch]="...">
     // Decorator fuer ein Attribut. Siehe InputMetadata
     @Input() kunde: Kunde
 
@@ -38,7 +38,7 @@ export default class DetailsStammdatenComponent implements OnInit {
 
     @log
     ngOnInit() {
-        console.log('kunde=', this.kunde)
+        console.log('Stammdaten ngoninit kunde=', this.kunde)
     }
 
     toString() {

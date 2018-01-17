@@ -545,7 +545,7 @@ internal class KundeRestTest (@LocalServerPort private val port: Int) {
         val HOST = "localhost"
         val KUNDE_PATH = "/"
         val ID_PATH = "/{id}"
-        val NACHNAME_PARAM = "name"
+        val NACHNAME_PARAM = "nachname"
         val EMAIL_PARAM = "email"
         val MULTIMEDIA_PATH = "/multimedia/{id}"
         val USERNAME = "admin"

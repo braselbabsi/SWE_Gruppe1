@@ -18,8 +18,8 @@
     <div class="card-header bg-primary">
         <span class="ml-1 font-weight-bold">Neuer Kunde</span>
     </div>
-
-    <div class="card-body">
+    <br>
+    <div class="card-block">
         <!-- Template-Syntax:
                 [formGroup]="form"  fuer Input = Property Binding
                                     d.h. formGroup fuer Attr. form
@@ -44,79 +44,71 @@
                 </div>
             </div>
 
-            <div class="form-group row" [class.has-danger]="!nachname.valid && nachname.touched">
+            <div class="form-group row"
+                 [class.has-danger]="!nachname.valid && nachname.touched">
                 <label for="nachnameInput" class="col col-2 form-control-label">
                     Nachname *
                 </label>
-                <div class="col col-10">
-                    <input id="nachnameInput" placeholder="Nachname" class="form-control" autofocus formControlName="nachname">
-                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!nachname.valid && nachname.touched">
-                        Ein Kundenachname muss mit einem Buchstaben oder einer Ziffer beginnen und mindestens 2 Zeichen lang sein.
+                <div class="col col-5">
+                    <input id="nachnameInput"
+                           placeholder="Nachname"
+                           class="form-control"
+                           autofocus
+                           formControlName="nachname">
+                    <div class="fa fa-exclamation-circle form-control-feedback"
+                         *ngIf="!nachname.valid && nachname.touched">
+                        Ein Nachname muss mit einem Buchstaben beginnen und mindestens 2 Zeichen lang sein.
                     </div>
                 </div>
             </div>
 
-            <div class="form-group row" [class.has-danger]="!adresse.valid && adresse.touched">
-                <label for="adresseInput" class="col col-2 form control-label">
-                    Adresse *
+            <div class="form-group row">
+                <label for="geburtsdatumInput" class="col col-2 form-control-label">
+                    Geburtsdatum *
                 </label>
-                <div class="col col-10">
-                    <input id="plzInput" placeholder="PLZ" class="form-control" autofocus formControlName="plz">
-                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!plz.valid && plz.touched">
-                        Eine PLZ muss mit einem Buchstaben oder einer Ziffer beginnen und mindestens 5 Zeichen lang sein.
-                    </div>
-                    <input id="ortInput" placeholder="Ort" class="form-control" autofocus formControlName="ort">
-                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!ort.valid && ort.touched">
-                        Ein Ort muss mit einem Buchstaben oder einer Ziffer beginnen und mindestens 2 Zeichen lang sein.
-                    </div>
+                <div class="col col-5">
+                    <input id="geburtsdatumInput"
+                           placeholder="01.01.1994"
+                           class="form-control"
+                           autofocus
+                           type="date"
+                           formControlName="geburtsdatum">
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col col-2 form-control-label">Kategorie</label>
-                <div class="col col-10">
-                    <select class="form-control" formControlName="kategorie">
-                        <option value="">Kategorie ausw&auml;hlen</option>
-                        <optgroup label="Hoch">
-                            <option value="5">5</option>
-                            <option value="4">4</option>
-                        </optgroup>
-                        <optgroup label="Mittel">
-                            <option value="3">3</option>
-                        </optgroup>
-                        <optgroup label="Niedrig">
-                            <option value="2">2</option>
-                            <option value="1">1</option>
-                        </optgroup>
-                </select>
+
+            <div class="form-group row" [class.has-danger]="!umsatz.valid && umsatz.touched">
+                <label for="umsatzInput" class="col col-2 form-control-label">
+                    Umsatz *
+                </label>
+                <div class="col col-5">
+                    <div class="input-group">
+                        <input id="umsatzInput" placeholder="Umsatz, z.B. 123.45" required class="form-control form-control-danger" type="number" formControlName="betrag" />
+                    </div>
+                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!umsatz.valid && umsatz.touched">
+                        Ein Umsatz muss eingegeben werden, z.B. 123.45
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label class="col col-2 form-control-label">Familienstand *</label>
-                <div class="col col-10">
-                    <div class="radio">
-                        <label class="radio-inline">
-                            <input type="radio" formControlName="geschlecht"
-                                   name="geschlecht" value="WEIBLICH"> Weiblich
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label class="radio-inline">
-                            <input type="radio" formControlName="geschlecht"
-                                   name="geschlecht" value="MÄNNLICH"> Männlich
-                        </label>
-                    </div>
+                <div class="col col-2">
+                    <select class="form-control form-control-danger"
+                            formControlName="waehrung" required>
+                        <option value="EUR">Euro</option>
+                        <option value="USD">USDollar</option>
+                        <option value="GBP">Pfund</option>
+                        <option value="JPY">Yen</option>
+                        <option value="CHF">Schweizer Franken</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group row" [class.has-danger]="!familienstand.valid && familienstand.touched">
                 <label class="col col-2 form-control-label">Familienstand *</label>
-                <div class="col col-10">
+                <div class="col col-5">
                     <select class="form-control form-control-danger" formControlName="familienstand" required>
                         <option value="">Einen Familienstand ausw&auml;hlen</option>
-                        <option value="LEDIG">Familienstand Ledig</option>
-                        <option value="VERHEIRATET">Familienstand Verheiratet</option>
-                        <option value="GESCHIEDEN">Familienstand Geschieden</option>
-                        <option value="VERWITWET">Familienstand Verwitwet</option>
+                        <option value="L">Ledig</option>
+                        <option value="VH">Verheiratet</option>
+                        <option value="G">Geschieden</option>
+                        <option value="VW">Verwittwet</option>
                     </select>
                     <!-- http://www.quackit.com/bootstrap/bootstrap_4/tutorial/bootstrap_dropdowns.cfm -->
                     <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!familienstand.valid && familienstand.touched">
@@ -124,119 +116,175 @@
                     </div>
                 </div>
             </div>
-            <!-- Umsatz ist bei neuem Kunden noch nicht vorhanden 
-            <div class="form-group row" [class.has-danger]="!preis.valid && preis.touched">
-                <label for="preisInput" class="col col-2 form-control-label">
-                    Preis *
-                </label>
-                <div class="col col-10">
-                    <div class="input-group">
-                        <input id="preisInput" placeholder="Preis, z.B. 123.45" required class="form-control form-control-danger" type="number" formControlName="preis" />
-                        <span class="input-group-addon">&#x20ac;</span>
-                    </div>
-                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!preis.valid && preis.touched">
-                        Ein Preis muss eingegeben werden, z.B. 123.45
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row" [class.has-danger]="!rabatt.valid && rabatt.touched">
-                <label for="rabattInput" class="col col-2 form-control-label">
-                    Rabatt *
-                </label>
-                <div class="col col-10">
-                    <div class="input-group">
-                        <input id="rabattInput" placeholder="Rabatt in Prozent, z.B. 5.67" required class="form-control form-control-danger" type="number" formControlName="rabatt" />
-                        <span class="input-group-addon">%</span>
-                    </div>
-                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!rabatt.valid && rabatt.touched">
-                        Ein Rabatt muss in Prozent eingegeben werden, z.B. 5.67
-                    </div>
-                </div>
-            </div>
-        -->
-
-            <div class="form-group row" [class.has-danger]="!geburtsdatum.valid && geburtsdatum.touched">
-                <label for="geburtsdatumInput" class="col col-2 form-control-label">
-                    Geburtsdatum
-                </label>
-                <div class="col col-10">
-                    <input id="geburtsdatumInput" class="form-control" type="date" formControlName="geburtsdatum" />
-                </div>
-            </div>
-
-            <div class="form-group row" [class.has-danger]="!homepage.valid && homepage.touched">
-                <label for="homepageInput" class="col col-2 form-control-label">
-                    Homepage 
-                </label>
-                <div class="col col-10">
-                    <input id="homepageInput" placeholder="Homepage" class="form-control" autofocus formControlName="homepage">
-                </div>
-            </div>
 
             <div class="form-group row">
-                <label for="newsletterInput" class="col col-2 form-control-label">
-                    Newsletter?
-                </label>
+                <label class="col col-2 form-control-label">Geschlecht *</label>
                 <div class="col col-10">
-                    <div class="checkbox">
-                        <label>
-                            <input id="newsletterInput" type="checkbox"
-                                   formControlName="newsletter"/>
+                    <div class="radio">
+                        <label class="radio-inline">
+                            <input type="radio" formControlName="geschlecht"
+                                   name="geschlecht" value="M"> Männlich
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="radio-inline">
+                            <input type="radio" formControlName="geschlecht"
+                                   name="geschlecht" value="W"> Weiblich
                         </label>
                     </div>
                 </div>
             </div>
 
+            <div class="form-group row"
+            [class.has-danger]="!ort.valid && ort.touched">
+            <label for="ortInput" class="col col-2 form-control-label">
+                 Ort
+                </label>
+                 <div class="col col-5">
+                  <input id="ortInput"
+                           placeholder="Ort"
+                           class="form-control"
+                           autofocus
+                           formControlName="ort">
+                    <div class="fa fa-exclamation-circle form-control-feedback"
+                         *ngIf="!ort.valid && ort.touched">
+                        Eine Ort muss mit einem Buchstaben beginnen und mindestens 2 Zeichen lang sein.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row"
+                 [class.has-danger]="!plz.valid && plz.touched">
+                <label for="plzInput" class="col col-2 form-control-label">
+                    Postleitzahl
+                </label>
+                <div class="col col-5">
+                    <input id="plzInput"
+                           placeholder="Postleitzahl"
+                           class="form-control"
+                           autofocus
+                           formControlName="plz">
+                    <div class="fa fa-exclamation-circle form-control-feedback"
+                         *ngIf="!plz.valid && plz.touched">
+                        Eine Postleitzahl muss mindestens 5 Zeichen lang sein.
+                    </div>
+                </div>
+            </div> 
+        
             <div class="form-group row">
-                <label for="interessenInput" class="col col-2 form-control-label">
+                <label for="interessenInput"
+                       class="col col-2 form-control-label">
                     Interessen
                 </label>
-                <div class="col col-10">
+                <div class="col col-5">
                     <div class="checkbox">
                         <label>
                             <input type="checkbox"
-                                   formControlName="sport"/>
+                                   formControlName="S"/>
                             Sport
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
                             <input type="checkbox"
-                                   formControlName="lesen"/>
+                                   formControlName="L"/>
                             Lesen
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
                             <input type="checkbox"
-                                   formControlName="reisen"/>
+                                   formControlName="R"/>
                             Reisen
                         </label>
                     </div>
                 </div>
             </div>
-
-            <div class="form-group row" [class.has-danger]="!email.valid && email.touched">
-                <label for="emailInput" class="col col-2 form-control-label">
-                    Email *
-                </label>
-                <div class="col col-10">
-                    <input id="emailInput" placeholder="Email" class="form-control form-control-danger" required minlength="2" formControlName="email">
-                    <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!email.valid && email.touched">
-                        Eine g&uuml;ltige Email-Adresse ist notwendig.
+            <div class="form-group row">
+                    <label for="newsletterInput" class="col col-2 form-control-label">
+                        Möchten Sie sich bei unserem Newsletter anmelden?
+                    </label>
+                    <div class="col col-5">
+                        <div class="radio">
+                            <label class="radio-inline">
+                                <input type="radio" formControlName="newsletter"
+                                       name="newsletter" value="true"> Ja    
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" formControlName="newsletter"
+                                       name="newsletter" value="false"> Nein    
+                            </label>
+                        </div>
                     </div>
                 </div>
+
+             <div class="form-group row"
+                [class.has-danger]="!username.valid && username.touched">
+               <label for="usernameInput" class="col col-2 form-control-label">
+                   Benutzername*
+               </label>
+               <div class="col col-5">
+                       <input id="usernameInput"
+                              placeholder="Username, z.B. User123"
+                              required
+                              class="form-control form-control-danger"
+                              type="text"
+                              formControlName="username">
+                   <div class="fa fa-exclamation-circle form-control-feedback"
+                        *ngIf="!username.valid && username.touched">
+                       Bitte geben Sie ihren Benutzername ein!
+                   </div>
+               </div>
+           </div>
+
+           <div class="form-group row">
+               <label for="passwordInput" class="col col-2 form-control-label">
+                    Passwort*
+               </label>
+               <div class="col col-5">
+                       <input id="passwordInput"
+                               placeholder="Passwort"
+                               required
+                               class="form-control form-control-danger"
+                               type="text"
+                               formControlName="password"/>
+                    <div class="fa fa-exclamation-circle form-control-feedback"
+                               *ngIf="!password.valid && password.touched">
+                              Bitte geben Sie ihr Passwort ein!
+                    </div>
             </div>
+            
+           </div>
+             <div class="form-group row"
+                [class.has-danger]="!email.valid && email.touched">
+               <label for="emailInput" class="col col-2 form-control-label">
+                   Email *
+               </label>
+               <div class="col col-5">
+                   <input id="emailInput"
+                          placeholder="Email"
+                          class="form-control form-control-danger"
+                          required
+                          minlength="2"
+                          formControlName="email">
+                   <div class="fa fa-exclamation-circle form-control-feedback"
+                        *ngIf="!email.valid && email.touched">
+                       Eine g&uuml;ltige Email-Adresse ist notwendig.
+                   </div>
+               </div>
+           </div>
+
+            
 
             <div class="form-group row">
-                <div class="col offset-2">
+                <div class="col col-5 offset-2">
                     <!-- Template-Syntax:
                             (click)="onSave()" fuer Output = Event Binding
                                                d.h. Ereignis click an onSave() anbinden
                                                oder on-click="onSave"
                             [disabled]="..." fuer Input = Property Binding
                     -->
-                    <button class="btn btn-primary" (click)="onSave()" [disabled]="!form.valid">
+                    <button class="btn btn-primary" (click)="onSave()">
                         <i class="fa fa-check"></i>
                         <span class="ml-1">Jetzt anlegen</span>
                     </button>

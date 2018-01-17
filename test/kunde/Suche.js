@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {PAUSE} from '../shared/constants'
+import {ADMIN_PASSWORD, ADMIN_USERNAME, PAUSE} from '../shared/constants'
 
 export default {
-    '@tags': ['Kunden', 'suche'],
+    '@tags': ['kunden', 'suche'],
 
     after() {
         this.client.end()
@@ -31,46 +31,34 @@ export default {
 
     'Suche alle Kunden'() {
         // Given
-        this.client.page
-            .suchePage()
+        const {page} = this.client
+        page.authPage()
+        // URL des "Page Objects" aufrufen
             .navigate()
-
-            // When
-            .checkInit()
+        // Kommando des "Page Objects" aufrufen
+            .login(ADMIN_USERNAME, ADMIN_PASSWORD)
+            .checkLogin()
+        // When 
+        page.header().clickSuche()
+        page.suchePage()
             .submit()
 
-            // Then
-            .checkAlleKunden()
+        // Then
     },
 
-    'Suche Kunden mit "a" im Nachname'() {
+    'Suche Kunden mit "a" im Nachnamen'() {
         // Given
-        const nachname = 'a'
-        this.client.page
-            .suchePage()
-            .navigate()
-
-            // When
-            .checkInit()
-            .nachname(nachname)
-            .submit()
-
-            // Then
-            .checkGefundeneKunden(nachname)
-    },
-
-    'Suche mit Fehlermeldung'() {
-        // Given
-        const nachname = 'XXX'
-
+        const {page} = this.client
+        const titel = 'a'
+        page.header().clickSuche()
+        page.suchePage()
         // When
-        this.client.page
-            .suchePage()
-            .navigate()
-            .nachname(nachname)
+            .titel(titel)
             .submit()
 
-            // Then
-            .checkFehlermeldung()
+        // Then
+        page.authPage().logout().checkLogout()
     },
+
 }
+

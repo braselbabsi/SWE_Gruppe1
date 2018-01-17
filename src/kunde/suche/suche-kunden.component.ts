@@ -1,7 +1,5 @@
 /*
- * Copyright (C) 2015 - 2016 Juergen Zimmermann, Hochschule Karlsruhe.
- *
- * Dies ist ein Test
+ * Copyright (C) 2015 - 2016 Juergen Zimmermann, Hochschule Karlsruhe
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,17 +21,17 @@ import {Title} from '@angular/platform-browser'
 import {log} from '../../shared'
 
 /**
- * Komponente f&uuml;r das Tag <code>&lt;hs-suche-kunden&gt;</code>, die aus
+ * Komponente f&uuml;r das Tag <code>&lt;hs-suche-buecher&gt;</code>, die aus
  * den Kindkomponenten f&uuml;r diese Tags besteht:
  * <ul>
- *  <li> <code>hs-suchformular</code>
+ *  <li> <code>hs-suchkriterien</code>
  *  <li> <code>hs-suchergebnis</code>
  * </ul>
  */
 @Component({
     selector: 'hs-suche-kunden',
     template: `
-        <hs-suchformular (waiting)="setWaiting($event)"></hs-suchformular>
+        <hs-suchkriterien (waiting)="setWaiting($event)"></hs-suchkriterien>
         <hs-suchergebnis [waiting]="waiting"></hs-suchergebnis>
     `,
 })
@@ -64,6 +62,6 @@ export default class SucheKundenComponent implements OnInit {
     }
 
     toString() {
-        return 'SucheKundenComponent'
+        return 'SucheBuecherComponent'
     }
 }

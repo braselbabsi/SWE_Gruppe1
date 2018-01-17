@@ -53,7 +53,7 @@ internal object PatchValidator {
         var kundeUpdated = kunde
         val violations = ops.map {
             when (it.path) {
-                "/name" -> {
+                "/nachname" -> {
                     val result =
                             replaceNachname(kundeUpdated, it.value, validator)
                     kundeUpdated = result.first
@@ -76,7 +76,7 @@ internal object PatchValidator {
             nachname: String,
             validator: Validator): Pair<Kunde, List<String>> {
         val violations = validator.validateValue(Kunde::class.java,
-                "name", nachname)
+                "nachname", nachname)
                 .map { it.message }
         val kundeUpdated = if (violations.isEmpty()) {
             kunde.copy(nachname = nachname)

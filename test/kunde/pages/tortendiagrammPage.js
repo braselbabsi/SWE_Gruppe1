@@ -29,7 +29,7 @@ const check = function() {
 }
 
 export default {
-    url: 'https://localhost/balkendiagramm',
+    url: 'http://localhost/balkendiagramm',
 
     elements: {
         diagrammLabel: {

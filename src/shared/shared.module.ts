@@ -23,7 +23,7 @@ import {HttpClientModule} from '@angular/common/http'
 import {ModuleWithProviders, NgModule, Type} from '@angular/core'
 // Form Controls fuer statische und dynamische Formulare
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
-// Titel im Tab aendern
+// Nachname im Tab aendern
 import {Title} from '@angular/platform-browser'
 // mind. 1x Animation
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
@@ -41,7 +41,7 @@ const komponentenExport: Array<Type<any>> =
 const komponentenIntern: Array<Type<any>> = []
 
 // Ein "Shared Module" stellt allgemeine Funktionalitaet fuer verschiedene
-// "Feature Modules" bereit, wie z.B. BuchModule
+// "Feature Modules" bereit, wie z.B. KundeModule
 @NgModule({
     // von den importierten Modulen sind deren exportierte Komponenten nutzbar
     imports: [...komponentenReExport],

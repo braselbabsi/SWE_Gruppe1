@@ -25,7 +25,7 @@ import org.springframework.data.mongodb.core.query.isEqualTo
 import org.springframework.util.MultiValueMap
 
 internal object CriteriaUtil {
-    private val NACHNAME = "name"
+    private val NACHNAME = "nachname"
     private val EMAIL = "email"
     private val KATEGORIE = "kategorie"
     private val PLZ = "plz"

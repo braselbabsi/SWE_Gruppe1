@@ -17,10 +17,10 @@
 
 // jshint expr:true
 
-const checkNachname = function(nachname) {
+const checkTitel = function(nachname) {
     const {expect} = this
 
-    expect.element('@tabInteressen').to.be.visible
+    expect.element('@tabSchlagwoerter').to.be.visible
     expect.element('@tabStammdaten').to.be.visible
 
     expect.element('@tabelle').to.be.visible
@@ -31,7 +31,7 @@ const checkNachname = function(nachname) {
 const clickUpdateButton = function() {
     const {expect, click} = this
 
-    expect.element('@tabInteressen').to.be.visible
+    expect.element('@tabSchlagwoerter').to.be.visible
     expect.element('@tabStammdaten').to.be.visible
 
     expect.element('@updateButton').to.be.visible
@@ -51,7 +51,7 @@ export default {
         tabStammdaten: {
             selector: 'a[href="#stammdaten"]',
         },
-        tabInteressen: {
+        tabSchlagwoerter: {
             selector: 'a[href="#interessen"]',
         },
         tabelle: {
@@ -70,7 +70,7 @@ export default {
 
     commands: [
         {
-            checkNachname,
+            checkTitel,
             clickUpdateButton,
             checkNoUpdateButton,
         },

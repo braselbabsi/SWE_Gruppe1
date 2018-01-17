@@ -43,7 +43,7 @@ internal interface KundeRepository : ReactiveCrudRepository<Kunde, String> {
      * @param nachname Der gemeinsame Nachname der gesuchten Kunden
      * @return Die gefundenen Kunden als Flux
      */
-    // SELECT * FROM kunde WHERE name ...
+    // SELECT * FROM kunde WHERE nachname ...
     fun findByNachnameIgnoreCase(nachname: String): Flux<Kunde>
 
     /**
@@ -52,7 +52,7 @@ internal interface KundeRepository : ReactiveCrudRepository<Kunde, String> {
      * @param nachname Der gemeinsame Nachname der gesuchten Kunden
      * @return Die gefundenen Kunden als Flux
      */
-    // SELECT * FROM kunde WHERE name ... LIKE ...
+    // SELECT * FROM kunde WHERE nachname ... LIKE ...
     fun findByNachnameContainingIgnoreCase(nachname: String): Flux<Kunde>
 
     /**
@@ -61,7 +61,7 @@ internal interface KundeRepository : ReactiveCrudRepository<Kunde, String> {
      * @return Die gefundenen Kunden als Flux mit Sortierung gemaess
      * ihrer Emailadresse
      */
-    // SELECT * FROM kunde WHERE name = ... ORDER BY email ASC
+    // SELECT * FROM kunde WHERE nachname = ... ORDER BY email ASC
     fun findByNachnameOrderByEmailAsc(nachname: String): Flux<Kunde>
 
     /**
@@ -84,6 +84,6 @@ internal interface KundeRepository : ReactiveCrudRepository<Kunde, String> {
      * fuer MongoDB
      * @return Die gefundenen Kunden als Flux
      */
-    // @Query("{\"name\": name}")
-    // fun findByQueryNachname(name: String): Flux<Kunde>
+    // @Query("{\"nachname\": nachname}")
+    // fun findByQueryNachname(nachname: String): Flux<Kunde>
 }

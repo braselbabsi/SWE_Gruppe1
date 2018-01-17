@@ -17,14 +17,14 @@
 
 // jshint expr:true
 
-const updateNachname = function(nachnameStr) {
+const updateTitel = function(titelStr) {
     const {expect, click, clearValue} = this
 
-    expect.element('@tabInteressen').to.be.visible
+    expect.element('@tabSchlagwoerter').to.be.visible
     expect.element('@tabStammdaten').to.be.visible
 
-    expect.element('@nachname').to.be.visible
-    clearValue('@nachname').setValue('@nachname', nachnameStr)
+    expect.element('@titel').to.be.visible
+    clearValue('@titel').setValue('@titel', titelStr)
     expect.element('@updateStammdatenButton').to.be.visible
     return click('@updateStammdatenButton')
 }
@@ -36,10 +36,10 @@ export default {
         tabStammdaten: {
             selector: 'a[href="#stammdaten"]',
         },
-        tabInteressen: {
+        tabSchlagwoerter: {
             selector: 'a[href="#interessen"]',
         },
-        nachname: {
+        titel: {
             selector: 'input[id=nachnameInput]',
         },
         updateStammdatenButton: {
@@ -49,7 +49,7 @@ export default {
 
     commands: [
         {
-            updateNachname,
+            updateTitel,
         },
     ],
 }

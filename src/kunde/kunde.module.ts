@@ -32,7 +32,7 @@ import TortendiagrammComponent from './diagramme/tortendiagramm.component'
 import {KundeService} from './shared/kunde.service'
 import SucheKundenComponent from './suche/suche-kunden.component'
 import SuchergebnisComponent from './suche/suchergebnis.component'
-import SuchformularComponent from './suche/suchformular.component'
+import SuchkriterienComponent from './suche/suchkriterien.component'
 import UpdateInteressenComponent from './update/update-interessen.component'
 import UpdateKundeComponent from './update/update-kunde.component'
 import UpdateStammdatenComponent from './update/update-stammdaten.component'
@@ -45,7 +45,7 @@ const komponentenExport: Array<Type<any>> = [
 
 const komponentenIntern: Array<Type<any>> = [
     DetailsInteressenComponent, DetailsStammdatenComponent,
-    SucheKundenComponent, SuchergebnisComponent, SuchformularComponent,
+    SucheKundenComponent, SuchergebnisComponent, SuchkriterienComponent,
     UpdateInteressenComponent, UpdateStammdatenComponent,
 ]
 

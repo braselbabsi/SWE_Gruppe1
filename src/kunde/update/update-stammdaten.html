@@ -19,48 +19,60 @@
         <label for="nachnameInput" class="col col-2 form-control-label">
             Nachname *
         </label>
-        <div class="col col-10">
-            <input id="nachnameInput" placeholder="Nachname" class="form-control" autofocus type="text" formControlName="nachname">
-            <div class="fa fa-exclamation-circle form-control-feedback" *ngIf="!nachname.valid && nachname.touched">
-                Ein Nachname muss mit einem Buchstaben oder einer Ziffer beginnen.
+        <div class="col col-5">
+            <input id="nachnameInput" placeholder="Nachname" class="form-control"
+                autofocus type="text" formControlName="nachname">
+            <div class="fa fa-exclamation-circle form-control-feedback"
+                *ngIf="!nachname.valid && nachname.touched">
+                Ein Nachname muss mit einem Buchstaben beginnen.
             </div>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="col col-2 form-control-label">Familienstand *</label>
-        <div class="col col-10">
+        <div class="col col-5">
             <select class="form-control" formControlName="familienstand">
-                <option value="LEDIG">ledig</option>
-                <option value="VERHEIRATET">verheiratet</option>
-                <option value="GESCHIEDEN">geschieden</option>
-                <option value="VERWITWET">verwitwet</option>
+                <option value="L">Ledig</option>
+                <option value="VH">Verheiratet</option>
+                <option value="G">Getrennt</option>
+                <option value="VW">Verwittwet</option>
             </select>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="col col-2 form-control-label">Geschlecht</label>
-        <div class="col col-10">
+        <div class="col col-5">
             <select class="form-control" formControlName="geschlecht">
-                <option value="MAENNLICH">m&aumlnnlich</option>
-                <option value="WEIBLICH">weiblich</option>
+                <option value="M">Maennlich</option>
+                <option value="W">Weiblich</option>
             </select>
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="kategorieInput" class="col col-2 form-control-label">
-            Bewertung
+        <label for="umsatzInput" class="col col-2 form-control-label">
+            Umsatz
         </label>
-        <div class="col col-10">
-            <input id="kategorieInput" type="range" min="0" max="5" formControlName="kategorie">
+        <div class="col col-3">
+            <input id="umsatzInput" placeholder="Umsatz" class="form-control"
+                   formControlName="betrag">
+        </div>
+        <div class="col col-2">
+            <select class="form-control form-control-danger"
+                            formControlName="waehrung" required>
+                        <option value="EUR">Euro</option>
+                        <option value="DOL">Dollar</option>
+                        <option value="JPN">Japanische Dollar</option>
+                    </select>
         </div>
     </div>
 
     <div class="form-group row">
-        <div class="col offset-2">
-            <button class="btn btn-primary" (click)="onUpdate()" [disabled]="form.pristine || !form.valid">
+        <div class="col col-5 offset-2">
+            <button class="btn btn-primary" (click)="onUpdate()"
+                    [disabled]="form.pristine || !form.valid">
                 <i class="fa fa-check"></i>
                 <span class="ml-1">Stammdaten aktualisieren</span>
             </button>

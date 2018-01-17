@@ -1,7 +1,7 @@
 // tslint:disable:max-file-line-count
 
 /*
- * Copyright (C) 2015 - 2017 Juergen Zimmermann, Hochschule Karlsruhe
+ * Copyright (C) 2015 - 2016 Juergen Zimmermann, Hochschule Karlsruhe
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Bereitgestellt durch HttpClientModule (s. Re-Export in SharedModule)
-// HttpClientModule enthaelt nur Services, keine Komponenten
+// Bereitgestellt durch das HttpModule (s. Re-Export im SharedModule)
+// HttpModule enthaelt nur Services, keine Komponenten
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http'
 import {EventEmitter, Inject, Injectable} from '@angular/core'
 
 import {ChartConfiguration, ChartDataSets} from 'chart.js'
 import * as _ from 'lodash'
-import * as moment from 'moment'
 
 import {BASE_URI, log, PATH_KUNDE} from '../../shared'
-// Aus SharedModule als Singleton exportiert
+// Aus dem SharedModule als Singleton exportiert
 import DiagrammService from '../../shared/diagramm.service'
 
 import {Kunde, KundeForm, KundeServer} from './index'
 
-// Methoden der Klasse HttpClient
+// Methoden der Klasse Http
 //  * get(url, options) – HTTP GET request
 //  * post(url, body, options) – HTTP POST request
 //  * put(url, body, options) – HTTP PUT request
@@ -46,7 +45,7 @@ import {Kunde, KundeForm, KundeServer} from './index'
 // Die Anwendungslogik wird vom Controller an Service-Klassen delegiert.
 
 /**
- * Die Service-Klasse zu B&uuml;cher.
+ * Die Service-Klasse zu Kunden.
  */
 @Injectable()
 export class KundeService {
@@ -58,20 +57,18 @@ export class KundeService {
     private _kunde: Kunde
 
     private jsonHeaders = new HttpHeaders({'Content-Type': 'application/json'})
-
     /**
      * @param diagrammService injizierter DiagrammService
-     * @param httpClient injizierter Service HttpClient (von Angular)
+     * @param httpClient injizierter Service Http (von AngularJS)
      * @return void
      */
     constructor(
         @Inject(DiagrammService) private readonly diagrammService:
             DiagrammService,
         @Inject(HttpClient) private readonly httpClient: HttpClient) {
-        this.baseUriKunde = `${BASE_URI}${PATH_KUNDE}`
-        console.log(
-            `KundeService.constructor(): baseUriKunde=${this.baseUriKunde}`)
-    }
+            this.baseUriKunde = `${BASE_URI}${PATH_KUNDE}`
+            console.log(`KundeService.constructor(): baseUriKunde=${this.baseUriKunde}`)
+        }
 
     /**
      * Ein Kunde-Objekt puffern.
@@ -80,7 +77,7 @@ export class KundeService {
      */
     set kunde(kunde: Kunde) {
         console.log('KundeService.set kunde()', kunde)
-        this._kunde = kunde
+        this.kunde = kunde
     }
 
     @log
@@ -112,8 +109,9 @@ export class KundeService {
     @log
     find(suchkriterien: KundeForm) {
         const params = this.suchkriterienToHttpParams(suchkriterien)
+        console.error(` PARAMS kunde.service.ts${params}`)
         const uri = this.baseUriKunde
-        console.log(`KundenService.find(): uri=${uri}`)
+        console.log(`KundeService.find(): uri=${uri}`)
 
         const nextFn: (response: Array<KundeServer>) => void = response => {
             const kunden =
@@ -124,7 +122,7 @@ export class KundeService {
             if (err.error instanceof Error) {
                 console.error('Client-seitiger oder Netzwerkfehler',
                               err.error.message)
-            } else {
+               } else {
                 const {status} = err
                 console.log(`KundeService.findById(): errorFn(): status=${status}` +
                             `Response-Body=${err.error}`)
@@ -135,13 +133,12 @@ export class KundeService {
         // Observable.subscribe() aus RxJS liefert ein Subscription Objekt,
         // mit dem man den Request abbrechen ("cancel") kann
         // tslint:disable:max-line-length
-        // https://angular.io/guide/http
         // https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/subscribe.md
         // http://stackoverflow.com/questions/34533197/what-is-the-difference-between-rx-observable-subscribe-and-foreach
         // https://xgrommx.github.io/rx-book/content/observable/observable_instance_methods/subscribe.html
         // tslint:enable:max-line-length
         this.httpClient.get<Array<KundeServer>>(uri, {params})
-                       .subscribe(nextFn, errorFn)
+                        .subscribe(nextFn, errorFn)
 
         // Same-Origin-Policy verhindert Ajax-Datenabfragen an einen Server in
         // einer anderen Domain. JSONP (= JSON mit Padding) ermoeglicht die
@@ -150,12 +147,13 @@ export class KundeService {
     }
 
     /**
-     * Ein Kunde anhand der ID suchen
-     * @param id Die ID des gesuchten Buchs
+     * Einen Kunden anhand der ID suchen
+     * @param id Die ID des gesuchten Kunden
      */
     @log
     findById(id: string) {
-        // Gibt es ein gepuffertes Kunde mit der gesuchten ID?
+        console.error(`findbyID para ? ${id}`)
+        // Gibt es einen gepufferten Kunden mit der gesuchten ID?
         if (this._kunde !== undefined && this._kunde._id === id) {
             console.log('KundeService.findById(): Kunde gepuffert')
             this.kundeEmitter.emit(this._kunde)
@@ -166,7 +164,7 @@ export class KundeService {
             return
         }
 
-        const uri = `${this.baseUriKunde}/${id}`
+        const uri = `${this.baseUriKunde}${id}`
         const nextFn: ((response: KundeServer) => void) = response => {
             this._kunde = Kunde.fromServer(response)
             this.kundeEmitter.emit(this._kunde)
@@ -180,16 +178,16 @@ export class KundeService {
                 console.log(`KundeService.findById(): errorFn(): status=${status}` +
                             `Response-Body=${err.error}`)
                 this.errorEmitter.emit(status)
-            }
         }
+    }
 
         console.log('KundeService.findById(): GET-Request')
         this.httpClient.get<KundeServer>(uri).subscribe(nextFn, errorFn)
     }
 
     /**
-     * Ein neues Kunde anlegen
-     * @param neuerKunde Das JSON-Objekt mit dem neuen Kunde
+     * Einen neuen Kunden anlegen
+     * @param neuerKunde Das JSON-Objekt mit dem neuen Kunden
      * @param successFn Die Callback-Function fuer den Erfolgsfall
      * @param errorFn Die Callback-Function fuer den Fehlerfall
      */
@@ -197,13 +195,12 @@ export class KundeService {
     save(
         neuerKunde: Kunde, successFn: (location: string) => void,
         errorFn: (status: number, errors: {[s: string]: any}) => void) {
-        neuerKunde.geburtsdatum = moment(new Date())
-
         const nextFn: ((response: HttpResponse<object>) => void) = response => {
             const location = response.url as string
             console.debug('location', location)
             successFn(location)
         }
+
         // async. Error-Callback statt sync. try/catch
         const errorFnPost: ((err: HttpErrorResponse) => void) = err => {
             if (err.error instanceof Error) {
@@ -211,7 +208,7 @@ export class KundeService {
                               err.error.message)
             } else {
                 if (errorFn !== undefined) {
-                    // z.B. {nachname: ..., geschlecht: ..., email: ...}
+                    // z.B. {titel: ..., verlag: ..., email: ...}
                     errorFn(err.status, err.error)
                 } else {
                     console.error('errorFnPut', err)
@@ -220,12 +217,12 @@ export class KundeService {
         }
         this.httpClient.post(this.baseUriKunde, neuerKunde,
                              {headers: this.jsonHeaders, observe: 'response'})
-                       .subscribe(nextFn, errorFnPost)
+                        .subscribe(nextFn, errorFnPost)
     }
 
     /**
-     * Ein vorhandenes Kunde aktualisieren
-     * @param kunde Das JSON-Objekt mit den aktualisierten Buchdaten
+     * Einen vorhandenen Kunden aktualisieren
+     * @param kunde Das JSON-Objekt mit den aktualisierten Kundendaten
      * @param successFn Die Callback-Function fuer den Erfolgsfall
      * @param errorFn Die Callback-Function fuer den Fehlerfall
      */
@@ -247,14 +244,15 @@ export class KundeService {
                 }
             }
         }
+        const uri = `${this.baseUriKunde}${kunde._id}`
+        const fullHeader = this.jsonHeaders.set('If-Match', '1')
 
-        this.httpClient.put(this.baseUriKunde, kunde, {headers: this.jsonHeaders})
+        this.httpClient.put(uri, kunde, {headers: fullHeader})
                        .subscribe(successFn, errorFnPut)
     }
-
     /**
-     * Ein Kunde l&ouml;schen
-     * @param kunde Das JSON-Objekt mit dem zu loeschenden Kunde
+     * Einen Kunden löschen
+     * @param kunden Das JSON-Objekt mit dem zu loeschenden Kunden
      * @param successFn Die Callback-Function fuer den Erfolgsfall
      * @param errorFn Die Callback-Function fuer den Fehlerfall
      */
@@ -262,7 +260,7 @@ export class KundeService {
     remove(
         kunde: Kunde, successFn: () => void|undefined,
         errorFn: (status: number) => void) {
-        const uri = `${this.baseUriKunde}/${kunde._id}`
+        const uri = `${this.baseUriKunde}${kunde._id}`
 
         const errorFnDelete: ((err: HttpErrorResponse) => void) = err => {
             if (err.error instanceof Error) {
@@ -305,7 +303,7 @@ export class KundeService {
     @log
     createBarChart(chartElement: HTMLCanvasElement) {
         const uri = this.baseUriKunde
-        const nextFn: ((kunden: Array<KundeServer>) => void) = kunden => {
+        const nextFn: ((kunden: Array<KundeServer>) => void) = (kunden) => {
             const labels =
                 kunden.map(kunde => kunde._id) as Array<string>
             console.log('KundeService.createBarChart(): labels: ', labels)
@@ -313,7 +311,7 @@ export class KundeService {
                 kunden.map(kunde => kunde.kategorie) as Array<number>
 
             const datasets: Array<ChartDataSets> =
-                [{label: 'Bewertung', data: ratingData}]
+                [{label: 'Kategorie', data: ratingData}]
             const config: ChartConfiguration = {
                 type: 'bar',
                 data: {labels, datasets},
@@ -339,7 +337,7 @@ export class KundeService {
                 kunden.map(kunde => kunde.kategorie) as Array<number>
 
             const datasets: Array<ChartDataSets> =
-                [{label: 'Bewertung', data: ratingData}]
+                [{label: 'Kategorie', data: ratingData}]
 
             const config: ChartConfiguration = {
                 type: 'line',
@@ -393,13 +391,12 @@ export class KundeService {
     }
 
     toString() {
-        return `KundeService: {kunde: ${JSON.stringify(this._kunde, null, 2)}}`
+        return `KundeService: {kunde: ${JSON.stringify(this.kunde, null, 2)}}`
     }
 
     /**
-     * Suchkriterien in Request-Parameter konvertieren.
-     * @param suchkriterien Suchkriterien fuer den GET-Request.
-     * @return Parameter fuer den GET-Request
+     * Ein Response-Objekt in ein Array von Kunde-Objekten konvertieren.
+     * @param response Response-Objekt eines GET-Requests.
      */
     @log
     private suchkriterienToHttpParams(suchkriterien: KundeForm): HttpParams {
@@ -409,27 +406,22 @@ export class KundeService {
             httpParams = httpParams.set('nachname', suchkriterien.nachname as string)
         }
         if (suchkriterien.familienstand !== undefined) {
-            const value = suchkriterien.familienstand.toString()
+            const value = suchkriterien.familienstand as string
             httpParams = httpParams.set('familienstand', value)
         }
-        if (suchkriterien.kategorie !== undefined) {
-            const value = suchkriterien.kategorie.toString()
-            httpParams = httpParams.set('rating', value)
-        }
-        if (suchkriterien.geschlecht !== undefined) {
-           // suchkriterien.geschlecht.length !== 0)
-            const value = suchkriterien.geschlecht.toString()
+        if (suchkriterien.geschlecht !== undefined && suchkriterien.geschlecht) {
+            const value = suchkriterien.geschlecht as string
             httpParams = httpParams.set('geschlecht', value)
         }
-        if (suchkriterien.lesen) {
-            httpParams = httpParams.set('lesen', 'true')
+        /* if (suchkriterien.S !== undefined && suchkriterien.S) {
+            httpParams = httpParams.set('S', 'true')
         }
-        if (suchkriterien.reisen) {
-            httpParams = httpParams.set('reisen', 'true')
+        if (suchkriterien.L !== undefined && suchkriterien.L) {
+            httpParams = httpParams.set('L', 'true')
         }
-        if (suchkriterien.sport) {
-            httpParams = httpParams.set('sport', 'true')
-        }
+        if (suchkriterien.R !== undefined && suchkriterien.R) {
+            httpParams = httpParams.set('R', 'true')
+        } */
         return httpParams
     }
 }

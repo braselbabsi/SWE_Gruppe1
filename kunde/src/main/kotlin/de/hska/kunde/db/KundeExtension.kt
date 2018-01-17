@@ -67,7 +67,7 @@ internal fun Kunde.update(other: Kunde) {
 
 internal object KundeDbUtil {
     private val clazz = Kunde::class.java
-    private val nachnameProp = findField(clazz, "name")!!
+    private val nachnameProp = findField(clazz, "nachname")!!
     private val emailProp = findField(clazz, "email")!!
     private val kategorieProp = findField(clazz, "kategorie")!!
     private val newsletterProp = findField(clazz, "newsletter")!!
